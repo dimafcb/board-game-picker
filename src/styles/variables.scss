@@ -1,0 +1,54 @@
+:root {
+  --primary-color: #1565c0;
+  --primary-contrast: #ffffff;
+
+  --accent-color: #616161;
+  --accent-contrast: #ffffff;
+}
+
+$primary-color: var(--primary-color);
+$primary-contrast: var(--primary-contrast);
+
+$accent-color: var(--accent-color);
+$accent-contrast: var(--accent-contrast);
+
+// bg colors
+$bg-color: #f8f8f8;
+$primary-bg-color: #ffffff;
+
+// other colors
+$black-color: #000000;
+$grey-color: #bcbcbc;
+$dark-grey-color: #848484;
+$action-color: #ff5722;
+$action-contrast: #ffffff;
+
+// ok, warning colors
+$warning-color: #f44336;
+$warning-contrast: #ffffff;
+
+$ok-color: #328b36;
+$ok-contrast: #ffffff;
+
+// font size
+$font-size-XL: 24px; // headers
+$font-size-L: 18px; // headers
+$font-size-M: 14px; // main content
+$font-size-S: 12px; // main content
+$font-size-XS: 10px; // labels
+$font-size-XXS: 8px; // placeholders
+
+// font weight
+$font-weight-tiny: 400;
+$font-weight-normal: 500;
+$font-weight-bold: 700;
+
+// borders & box shadow
+$box-shadow-primary: 0 1px 3px 0 #00000033, 0 1px 1px 0 #00000024, 0 2px 1px -1px #0000001f;
+$box-shadow-secondary: 0px 0px 5px 0px #00000040;
+
+$border-color: #e2e2e2;
+$border-radius: 3px;
+
+// toolbar
+$toolbar-height: 70px;
