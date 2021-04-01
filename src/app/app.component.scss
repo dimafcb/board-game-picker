@@ -1,11 +1,5 @@
 @import '../styles/variables';
 
-$player-size: 100px;
-$player-photo-size: 74px;
-
-$game-size: 100px;
-$game-photo-size: 74px;
-
 .container {
   padding: 20px;
 
@@ -37,6 +31,18 @@ $game-photo-size: 74px;
   padding: 3px;
   text-align: center;
   cursor: pointer;
+
+  .name {
+    font-weight: $font-weight-normal;
+  }
+
+  &:hover .photo {
+    padding: 3px;
+  }
+
+  &:hover .name {
+    filter: hue-rotate(45deg);
+  }
 }
 
 .player {
@@ -48,10 +54,6 @@ $game-photo-size: 74px;
     height: $player-photo-size;
     border-radius: 50%;
   }
-
-  .player-name {
-    font-weight: $font-weight-normal;
-  }
 }
 
 .game {
@@ -62,8 +64,8 @@ $game-photo-size: 74px;
     width: $game-photo-size;
     height: $game-photo-size;
   }
+}
 
-  .game-name {
-    font-weight: $font-weight-normal;
-  }
+.spinning-wheel {
+  text-align: center;
 }

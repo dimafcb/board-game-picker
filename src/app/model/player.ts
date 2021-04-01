@@ -1,7 +1,7 @@
 export interface Player {
   id: string;
   name: string;
-  photo: string;
   dateCreated: number;
+  photo?: string;
   disabled?: boolean;
 }

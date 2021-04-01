@@ -1,0 +1,41 @@
+@import '../../../styles/variables';
+
+$photo-size: 200px;
+
+.editor-photo-container {
+  min-width: $photo-size;
+  flex: 0 0 $photo-size;
+  text-align: center;
+}
+
+.editor-form {
+  flex: 1 0 200px;
+}
+
+.editor-buttons {
+  flex: 1 0 100%;
+  text-align: end;
+}
+
+.photo-container {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  min-height: $photo-size;
+  width: 100%;
+}
+
+.photo {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.player-icon {
+  height: $player-photo-size;
+  width: $player-photo-size;
+  font-size: $player-photo-size;
+}

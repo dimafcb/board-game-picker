@@ -1,20 +1,23 @@
 <div class="container">
   <mat-card class="section">
     <div class="header">
-      <span *ngIf="stat.allPlayers; else noPlayersTemplate"
-        >Players:&nbsp;
+      <span *ngIf="stat.allPlayers; else noPlayersTemplate">
+        Active players:&nbsp;
         <span class="bold"> {{ stat.activePlayers }}</span>
         &nbsp;/&nbsp;
         <span class="bold"> {{ stat.allPlayers }}</span>
       </span>
       <ng-template #noPlayersTemplate>No players, please add one</ng-template>
-      <button mat-button color="primary" class="btn player-add" (click)="addPlayer()">Add player</button>
+      <button mat-button color="primary" class="btn btn-add" (click)="editPlayer()">Add player</button>
     </div>
     <div class="list">
-      <div class="player" *ngFor="let player of players; trackBy: trackPlayers" [ngClass]="{ disabled: player.disabled }" (click)="togglePlayer(player)">
+      <div class="player animated" *ngFor="let player of players; trackBy: trackPlayers" [ngClass]="{ disabled: player.disabled }" (click)="togglePlayer(player)">
         <!-- <mat-icon class="player-icon">person</mat-icon> -->
-        <img class="player-photo" src="{{ player.photo }}" alt="" />
-        <div class="player-name primary">{{ player.name }}</div>
+        <img *ngIf="player.photo; else noPhotoTemplate" class="photo player-photo" src="{{ player.photo }}" alt="" />
+        <ng-template #noPhotoTemplate>
+          <mat-icon class="player-icon">person</mat-icon>
+        </ng-template>
+        <div class="name primary player-name">{{ player.name }}</div>
       </div>
     </div>
   </mat-card>
@@ -29,15 +32,18 @@
         <span class="bold">{{ stat.allGames }}</span>
       </span>
       <ng-template #noGamesTemplate>No games, please add one</ng-template>
-      <button mat-button color="primary" class="btn game-add" (click)="addGame()">Add game</button>
+      <button mat-button color="primary" class="btn btn-add" (click)="addGame()">Add game</button>
     </div>
     <div class="list">
-      <div class="game" *ngFor="let game of games; trackBy: trackGames" [ngClass]="{ disabled: game.disabled }" (click)="toggleGame(game)">
-        <img class="game-photo" src="{{ game.photo }}" alt="" />
-        <div class="game-name primary">{{ game.name }}</div>
+      <div class="game animated" *ngFor="let game of games; trackBy: trackGames" [ngClass]="{ disabled: game.disabled }" (click)="toggleGame(game)">
+        <img class="photo game-photo" src="{{ game.photo }}" alt="" />
+        <div class="name primary game-name">{{ game.name }}</div>
       </div>
     </div>
   </mat-card>
 
-  <div class="spinning-wheel"></div>
+  <div class="spinning-wheel">
+    <canvas id="spinningWheel" width="400" height="400">Canvas not supported, use another browser. </canvas>
+    <button mat-raised-button color="primary" class="btn btn-spin" (click)="spin()">Spin</button>
+  </div>
 </div>

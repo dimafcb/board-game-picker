@@ -29,10 +29,15 @@ body {
 
 * {
   box-sizing: border-box;
+
+  &.animated,
+  &.animated * {
+    transition: all 0.15s linear;
+  }
 }
 
 .disabled {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .primary {
@@ -41,4 +46,29 @@ body {
 
 .bold {
   font-weight: $font-weight-bold;
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.mat-toolbar {
+  height: $toolbar-height;
+  font-size: $font-size-M;
+}
+
+.editor-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.list {
+  max-height: 240px;
+  overflow-y: auto;
 }
