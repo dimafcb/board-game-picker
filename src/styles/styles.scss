@@ -32,7 +32,7 @@ body {
 
   &.animated,
   &.animated * {
-    transition: all 0.15s linear;
+    transition: all 0.1s linear;
   }
 }
 
@@ -44,28 +44,22 @@ body {
   color: $primary-color;
 }
 
+.accent {
+  color: $accent-color;
+}
+
 .bold {
   font-weight: $font-weight-bold;
 }
 
 .mat-dialog-container {
   padding: 0px !important;
+  max-width: 600px;
 }
 
 .mat-toolbar {
   height: $toolbar-height;
   font-size: $font-size-M;
-}
-
-.editor-container {
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.form-field {
-  width: 100%;
 }
 
 .list {

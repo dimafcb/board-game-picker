@@ -28,7 +28,7 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles/styles.scss"],
-            "scripts": ["node_modules/gsap/dist/gsap.min.js", "node_modules/winwheel/dist/Winwheel.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

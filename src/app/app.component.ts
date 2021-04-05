@@ -1,24 +1,24 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-// import { TweenMax } from 'gsap';
+import { Component, OnInit } from '@angular/core';
 import { from, Subscription } from 'rxjs';
+import { GameEditorComponent } from './components/game-editor/game-editor.component';
 import { PlayerEditorComponent } from './components/player-editor/player-editor.component';
+import { TIME_TO_PLAY_LIST } from './const/time-to-play';
 import { DialogResult } from './model/dialog-result';
 import { Game } from './model/game';
 import { Player } from './model/player';
 import { Stat } from './model/stat';
+import { TimeToPlay } from './model/time-to-play';
 import { DialogService } from './services/dialog.service';
 import { GameDexie } from './storage/game-dexie';
+import { TextScramble } from './utils/text-scramble';
 import { Utils } from './utils/utils';
-
-// declare let TweenMax: any;
-declare let Winwheel: any;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   players: Player[] = [];
   playersSort: keyof Player = 'dateCreated';
   private playersSubscription?: Subscription;
@@ -27,54 +27,21 @@ export class AppComponent implements OnInit, AfterViewInit {
   gamesSort: keyof Game = 'rating';
   private gamesSubscription?: Subscription;
 
+  timeToPlayList: TimeToPlay[] = TIME_TO_PLAY_LIST;
+  timeToPlay: TimeToPlay = this.timeToPlayList[0];
+
   stat: Stat = { activeGames: 0, activePlayers: 0, allGames: 0, allPlayers: 0 };
 
+  result?: Game;
+  inProgress = false;
+
   private gameDexie = new GameDexie();
-
-  // segments = [];
-  innerRadius = 10;
-  height = 400;
-  spinDuration = 10;
-  spinAmount = 5;
-
-  wheel!: any;
 
   constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {
     this.fetchPlayers();
     this.fetchGames();
-  }
-
-  ngAfterViewInit(): void {
-    this.wheel = new Winwheel({
-      canvasId: 'spinningWheel',
-      numSegments: 0,
-      segments: [],
-      innerRadius: this.innerRadius || 0,
-      outerRadius: this.height / 2 - 20,
-      // pointerAngle: 45,
-      centerY: this.height / 2 + 20,
-      // textOrientation : this.textOrientation,
-      // textAligment : this.textAlignment,
-      animation: {
-        type: 'spinToStop', // Type of animation.
-        duration: this.spinDuration, // How long the animation is to take in seconds.
-        spins: this.spinAmount, // The number of complete 360 degree rotations the wheel is to do.
-      },
-      // Specify pointer guide properties.
-      // pointerGuide: {
-      //   display: true,
-      //   strokeStyle: 'red',
-      //   lineWidth: 3,
-      // },
-      pins: {
-        fillStyle: '#4e38f3',
-        outerRadius: 3,
-        margin: -3,
-      },
-    });
-    console.log('Winwheel', this.wheel);
   }
 
   // players
@@ -117,50 +84,34 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
-  trackPlayers(i: number, player: Player): string {
-    return player.id;
-  }
-
   // games
 
   private fetchGames(): void {
     this.gamesSubscription?.unsubscribe();
-    this.gamesSubscription = from(this.gameDexie.games.toCollection().sortBy(this.gamesSort)).subscribe({
-      next: (games) => {
-        this.games = games;
-        this.stat.allGames = this.games.length;
-        this.stat.activeGames = this.games.filter((p) => !p.disabled).length;
-        console.log('SEGMENTS', this.wheel.segments);
-        let segmentsCount = this.wheel.segments?.length || 0;
-        while (segmentsCount-- >= 0) {
-          this.wheel.deleteSegment();
-        }
-        this.games.forEach((g) => {
-          this.wheel.addSegment({
-            fillStyle: '#eae56f',
-            text: g.name,
-          });
-        });
-        // while (this.wheel?.segments?.length) {
-        //   // this.wheel.deleteSegment();
-        // }
-        this.wheel.draw();
-      },
-    });
+    this.gamesSubscription = from(this.gameDexie.games.toCollection().sortBy(this.gamesSort))
+      // .pipe(delay(1000))
+      .subscribe({
+        next: (games) => {
+          this.games = games;
+          this.stat.allGames = this.games.length;
+          this.stat.activeGames = this.games.filter((p) => !p.disabled).length;
+        },
+      });
   }
 
-  addGame(): void {
-    const newGame: Game = {
-      id: `game${Utils.randomId()}`,
-      // name: `New player ${this.p.length + 1}`,
-      name: `game${Utils.randomName()}`,
-      photo: 'https://cf.geekdo-images.com/0K1AOciqlMVUWFPLTJSiww__opengraph_left/img/_2lmRrBuHxOVB4rhF9_9MArsYUQ=/fit-in/445x445/filters:strip_icc()/pic66668.jpg',
-      dateCreated: Date.now(),
-      playersMin: 2,
-      playersMax: 5,
-      averageTimeToPlay: 45,
-    };
-    this.gameDexie.games.put(newGame).then(() => this.fetchGames());
+  editGame(game?: Game): void {
+    this.dialogService
+      .open<GameEditorComponent>(GameEditorComponent, {}, (dialogRef) => {
+        if (game?.id) {
+          dialogRef.componentInstance.game = Object.assign({}, game);
+        }
+      })
+      .subscribe((result) => {
+        console.log('editPlayer', result);
+        if (result === DialogResult.Ok) {
+          this.fetchGames();
+        }
+      });
   }
 
   toggleGame(game: Game): void {
@@ -171,11 +122,41 @@ export class AppComponent implements OnInit, AfterViewInit {
       .then(() => this.fetchGames());
   }
 
-  trackGames(i: number, game: Game): string {
-    return game.id;
+  async start(el: HTMLDivElement): Promise<void> {
+    this.inProgress = true;
+    this.result = undefined;
+
+    const scrabble = new TextScramble(el);
+
+    const activePlayersCount = await this.gameDexie.players.filter((p) => !p.disabled).count();
+    const games = await this.gameDexie.games
+      .filter((g) => {
+        if (this.timeToPlay.min && g.averageTimeToPlay < this.timeToPlay.min) {
+          return false;
+        }
+        if (this.timeToPlay.max && g.averageTimeToPlay > this.timeToPlay.max) {
+          return false;
+        }
+        if (g.disabled) {
+          return false;
+        }
+        if (g.playersMin > activePlayersCount || g.playersMax < activePlayersCount) {
+          return false;
+        }
+        return true;
+      })
+      .toArray();
+    const result = Utils.randomItem(games);
+
+    scrabble.setText(result.name).then((res) => {
+      this.inProgress = false;
+      this.result = result;
+    });
   }
 
-  spin(): void {
-    this.wheel.startAnimation();
+  trackById = (i: number, item: Game | Player): string => item.id;
+
+  selectTime(timeToPlay: TimeToPlay): void {
+    this.timeToPlay = timeToPlay;
   }
 }

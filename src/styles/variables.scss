@@ -31,6 +31,7 @@ $ok-color: #328b36;
 $ok-contrast: #ffffff;
 
 // font size
+$font-size-XXL: 48px; // result
 $font-size-XL: 24px; // headers
 $font-size-L: 18px; // headers
 $font-size-M: 14px; // main content
@@ -44,11 +45,8 @@ $font-weight-normal: 500;
 $font-weight-bold: 700;
 
 // borders & box shadow
-$box-shadow-primary: 0 1px 3px 0 #00000033, 0 1px 1px 0 #00000024, 0 2px 1px -1px #0000001f;
-$box-shadow-secondary: 0px 0px 5px 0px #00000040;
-
-$border-color: #e2e2e2;
-$border-radius: 3px;
+$box-shadow-primary: $primary-color 0px 0px 2px 1px;
+$box-shadow-accent: $accent-color 0px 0px 2px 1px;
 
 // toolbar
 $toolbar-height: 36px;
@@ -56,5 +54,45 @@ $toolbar-height: 36px;
 // tiles / photos
 $player-size: 100px;
 $player-photo-size: 76px;
-$game-size: 100px;
+$game-size: 110px;
 $game-photo-size: 76px;
+$icon-size: 36px;
+
+$editor-photo-size: 200px;
+$editor-icon-size: 100px;
+
+$result-photo-size: 200px;
+
+$time-size: 80px;
+
+$default-margin: 10px;
+
+@keyframes colorChange {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes letterSpacing {
+  0% {
+    letter-spacing: -40px;
+  }
+  75% {
+    letter-spacing: 10px;
+  }
+  100% {
+    letter-spacing: 0px;
+  }
+}
+
+@keyframes imageBlur {
+  0% {
+    filter: blur(10px);
+  }
+  100% {
+    filter: unset;
+  }
+}

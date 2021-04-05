@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="editor-toolbar">
+  <span>{{ game.id ? 'Edit game' : 'Add game' }}</span>
+</mat-toolbar>
+<div class="editor-container">
+  <form class="editor-form-bgg">
+    <mat-form-field class="editor-form-field">
+      <mat-label>Search via BGG</mat-label>
+      <input type="text" placeholder="Type at least 3 chars" aria-label="Number" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of autocompleteItems | async" [value]="option">
+          {{ option.name.value }}
+          <ng-container *ngIf="option.yearpublished?.value">&nbsp;({{ option.yearpublished?.value }})</ng-container>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <div class="editor-photo-container">
+    <div class="editor-photo-wrapper">
+      <img #image [hidden]="!game.photo" class="editor-photo" src="{{ game.photo }}" alt="" />
+      <mat-icon *ngIf="!game.photo" class="editor-icon game-icon">image</mat-icon>
+    </div>
+    <input #fileInput style="display: none" type="file" accept="image/*" (change)="onFileSelected(fileInput)" />
+    <button mat-button color="primary" (click)="fileInput.click()">Pick photo</button>
+  </div>
+  <div class="editor-form">
+    <mat-form-field class="editor-form-field">
+      <input matInput placeholder="Name" [(ngModel)]="game.name" />
+    </mat-form-field>
+    <mat-form-field class="editor-form-field" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="" minRows="2" maxRows="3" [(ngModel)]="game.description"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="editor-buttons">
+    <button mat-button color="accent" (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" (click)="save()">Save</button>
+  </div>
+</div>

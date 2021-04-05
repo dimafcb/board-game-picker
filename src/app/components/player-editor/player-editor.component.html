@@ -1,17 +1,17 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="editor-toolbar">
   <span>{{ player.id ? 'Edit player' : 'Add player' }}</span>
 </mat-toolbar>
 <div class="editor-container">
   <div class="editor-photo-container">
-    <div class="photo-container">
-      <img #image [hidden]="!player.photo" class="photo" src="{{ player.photo }}" alt="" />
-      <mat-icon *ngIf="!player.photo" class="player-icon">person</mat-icon>
+    <div class="editor-photo-wrapper">
+      <img #image [hidden]="!player.photo" class="editor-photo" src="{{ player.photo }}" alt="" />
+      <mat-icon *ngIf="!player.photo" class="editor-icon player-icon">person</mat-icon>
     </div>
     <input #fileInput style="display: none" type="file" accept="image/*" (change)="onFileSelected(fileInput)" />
-    <button mat-button color="accent" (click)="fileInput.click()">Pick photo</button>
+    <button mat-button color="primary" (click)="fileInput.click()">Pick photo</button>
   </div>
   <div class="editor-form">
-    <mat-form-field class="form-field">
+    <mat-form-field class="editor-form-field">
       <input matInput placeholder="Name" [(ngModel)]="player.name" />
     </mat-form-field>
   </div>

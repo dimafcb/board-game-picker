@@ -7,5 +7,12 @@ export interface Game {
   dateCreated: number;
   rating?: number; // combined rating
   photo?: string;
+  description?: string;
+
+  // bgg
+  idBgg?: number;
+  ratingBgg?: number;
+
+  // temporary
   disabled?: boolean;
 }
