@@ -1,0 +1,1 @@
+ng build --prod --stats-json && webpack-bundle-analyzer ./dist/board-game-picker/stats.json
