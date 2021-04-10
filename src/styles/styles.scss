@@ -62,7 +62,22 @@ body {
   font-size: $font-size-M;
 }
 
-.list {
-  max-height: 240px;
-  overflow-y: auto;
+.mat-snack-bar-container {
+  &.message-ok {
+    background-color: $primary-color;
+
+    &,
+    button {
+      color: $primary-contrast;
+    }
+  }
+
+  &.message-error {
+    background-color: $warning-color;
+
+    &,
+    button {
+      color: $warning-contrast;
+    }
+  }
 }

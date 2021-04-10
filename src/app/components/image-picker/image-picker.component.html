@@ -1,0 +1,9 @@
+<div class="image-wrapper">
+  <img *ngIf="image; else noImageTemplate" class="image" src="{{ image }}" alt="" />
+  <ng-template #noImageTemplate>
+    <mat-icon *ngIf="icon" class="icon">{{ icon }}</mat-icon>
+  </ng-template>
+</div>
+<input #fileInput style="display: none" type="file" accept="image/*" (change)="imageSelected(fileInput)" />
+<button *ngIf="image" mat-button color="accent" (click)="deleteImage()">Delete</button>
+<button mat-button color="primary" (click)="fileInput.click()">Pick image</button>

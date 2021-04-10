@@ -1,7 +1,12 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { from, Subscription } from 'rxjs';
+import { SNACKBAR_CONFIG } from '../../const/snackbar-config';
 import { DialogResult } from '../../model/dialog-result';
 import { Player } from '../../model/player';
+import { BggApiService } from '../../services/bgg-api.service';
 import { GameDexie } from '../../storage/game-dexie';
 import { Utils } from '../../utils/utils';
 
@@ -10,16 +15,20 @@ import { Utils } from '../../utils/utils';
   templateUrl: './player-editor.component.html',
   styleUrls: ['./player-editor.component.scss'],
 })
-export class PlayerEditorComponent implements OnInit {
+export class PlayerEditorComponent implements OnInit, OnDestroy {
   // @ViewChild('image', { static: true }) public imageElRef!: ElementRef<HTMLImageElement>;
   // cropper!: Cropper;
+
+  playerBggControl = new FormControl('');
+
+  subscription!: Subscription;
 
   player: Partial<Player> = {
     name: 'New player',
   };
   private gameDexie = new GameDexie();
 
-  constructor(@Optional() private dialogRef: MatDialogRef<PlayerEditorComponent>) {}
+  constructor(@Optional() private dialogRef: MatDialogRef<PlayerEditorComponent>, private bggApiService: BggApiService, private matSnackBar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
@@ -33,26 +42,45 @@ export class PlayerEditorComponent implements OnInit {
     this.dialogRef?.close(DialogResult.Ok);
   }
 
-  cancel(): void {
-    this.dialogRef?.close(DialogResult.Cancel);
+  async deletePlayer(): Promise<void> {
+    if (this.player.id) {
+      await this.gameDexie.players.delete(this.player.id);
+    }
+    this.dialogRef?.close(DialogResult.Ok);
   }
 
-  onFileSelected(element: HTMLInputElement): void {
-    console.log('onFileSelected..', element.files);
-    const imageFile = element.files?.[0];
+  cancel(): void {
+    this.dialogRef?.close(DialogResult.Cancel);
 
-    const reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        console.log(reader.result);
-        this.player.photo = reader.result as string;
-      },
-      false
-    );
+    // https://www.boardgamegeek.com/xmlapi2/collection?username=samort7&subtype=boardgame&own=1
 
-    if (imageFile) {
-      reader.readAsDataURL(imageFile);
-    }
+    // https://www.boardgamegeek.com/xmlapi2/users?name=
+  }
+
+  imageSelected(image: string): void {
+    this.player.image = image;
+  }
+
+  search(): void {
+    this.subscription?.unsubscribe();
+    const name = (this.playerBggControl?.value as string).trim();
+    this.subscription = from(this.bggApiService.getUserByName({ name })).subscribe((bggUser) => {
+      console.log('USER..', bggUser);
+      if (bggUser?.id) {
+        this.player.bggId = bggUser.id;
+        this.player.name = bggUser.name;
+        if (bggUser.avatarlink?.value?.length > 3) {
+          this.player.image = bggUser.avatarlink.value;
+        } else {
+          this.player.image = undefined;
+        }
+      } else {
+        this.matSnackBar.open(`user "${name.trim().toLowerCase()}" was not found`, 'OK', SNACKBAR_CONFIG());
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

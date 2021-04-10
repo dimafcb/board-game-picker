@@ -6,12 +6,13 @@ export interface Game {
   averageTimeToPlay: number; // average time to play in minutes
   dateCreated: number;
   rating?: number; // combined rating
-  photo?: string;
+  image?: string;
   description?: string;
+  disabledStatus?: string;
 
   // bgg
-  idBgg?: number;
-  ratingBgg?: number;
+  bggId?: number;
+  bggRating?: number;
 
   // temporary
   disabled?: boolean;

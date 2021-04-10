@@ -11,34 +11,10 @@
     padding: $default-margin;
   }
 
-  .editor-photo-container {
-    min-width: $editor-photo-size;
-    flex: 0 0 $editor-photo-size;
+  .editor-image-container {
+    min-width: $editor-image-size;
+    flex: 0 0 $editor-image-size;
     text-align: center;
-
-    .editor-photo-wrapper {
-      display: inline-flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: center;
-      min-height: $editor-photo-size;
-      width: 100%;
-
-      .editor-photo {
-        position: relative;
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-      }
-
-      .editor-icon {
-        height: $editor-icon-size;
-        width: $editor-icon-size;
-        font-size: $editor-icon-size;
-        color: $accent-color;
-      }
-    }
   }
 
   .editor-form-bgg {

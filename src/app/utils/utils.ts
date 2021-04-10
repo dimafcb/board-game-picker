@@ -27,8 +27,8 @@ export class Utils {
     }
   }
 
-  static randomItem<T>(items: T[]): T {
-    return items[Math.floor(Math.random() * items.length)];
+  static randomItem<T>(items: T[]): T | undefined {
+    return (items?.length && items[Math.floor(Math.random() * items.length)]) || undefined;
   }
 
   static minutesToHours(value: number): string {

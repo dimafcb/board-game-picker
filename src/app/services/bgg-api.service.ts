@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { parse } from 'fast-xml-parser';
-import { GameBgg, GameBggFull } from '../model/game-bgg';
+import { SNACKBAR_CONFIG } from '../const/snackbar-config';
+import { BggGame, BggGameFull } from '../model/bgg/bgg-game';
+import { BggUser } from '../model/bgg/bgg-user';
 
 export type BggApiMethod = 'GET' | 'POST';
 
@@ -8,7 +11,7 @@ const BGG_API_ENDPOINT = 'https://www.boardgamegeek.com/xmlapi2/';
 
 @Injectable({ providedIn: 'root' })
 export class BggApiService {
-  constructor() {}
+  constructor(private matSnackBar: MatSnackBar) {}
 
   private makeRequest(url: string, method: BggApiMethod = 'GET'): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -49,6 +52,11 @@ export class BggApiService {
         });
       };
       xhr.send();
+    }).catch((err) => {
+      console.log('ERROR', err);
+      const message = err.statusText || 'Network error or BoardGameGeek.com is unavailable, try again later';
+      this.matSnackBar.open(message, 'OK', SNACKBAR_CONFIG(true));
+      throw err;
     });
   }
 
@@ -60,13 +68,23 @@ export class BggApiService {
     return url.toString();
   }
 
-  searchGames(params: any): Promise<GameBgg[]> {
+  searchGames(params: any): Promise<BggGame[]> {
     const url = this.getUrlWithParams(BGG_API_ENDPOINT + 'search', params);
     return this.makeRequest(url).then((resp) => resp?.items?.item);
   }
 
-  getGameDetails(params: any): Promise<GameBggFull> {
+  getGameDetails(params: any): Promise<BggGameFull> {
     const url = this.getUrlWithParams(BGG_API_ENDPOINT + 'things', params);
+    return this.makeRequest(url).then((resp) => resp?.items?.item?.[0]);
+  }
+
+  getUserByName(params: any): Promise<BggUser> {
+    const url = this.getUrlWithParams(BGG_API_ENDPOINT + 'users', params);
+    return this.makeRequest(url).then((resp) => resp?.user);
+  }
+
+  getUserCollection(params: any): Promise<BggGameFull> {
+    const url = this.getUrlWithParams(BGG_API_ENDPOINT + 'collection', params);
     return this.makeRequest(url).then((resp) => resp?.items?.item?.[0]);
   }
 }

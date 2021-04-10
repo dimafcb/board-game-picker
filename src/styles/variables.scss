@@ -1,16 +1,20 @@
 :root {
   --primary-color: #1565c0;
   --primary-contrast: #ffffff;
+  --primary-color-fade: #1565c080;
 
   --accent-color: #616161;
   --accent-contrast: #ffffff;
+  --accent-color-fade: #61616180;
 }
 
 $primary-color: var(--primary-color);
 $primary-contrast: var(--primary-contrast);
+$primary-color-fade: var(--primary-color-fade);
 
 $accent-color: var(--accent-color);
 $accent-contrast: var(--accent-contrast);
+$accent-color-fade: var(--accent-color-fade);
 
 // bg colors
 $bg-color: #f8f8f8;
@@ -45,23 +49,24 @@ $font-weight-normal: 500;
 $font-weight-bold: 700;
 
 // borders & box shadow
-$box-shadow-primary: $primary-color 0px 0px 2px 1px;
-$box-shadow-accent: $accent-color 0px 0px 2px 1px;
+$box-shadow-primary: $primary-color-fade 0px 0px 2px 1px;
+$box-shadow-accent: $accent-color-fade 0px 0px 2px 1px;
 
 // toolbar
 $toolbar-height: 36px;
 
-// tiles / photos
-$player-size: 100px;
-$player-photo-size: 76px;
-$game-size: 110px;
-$game-photo-size: 76px;
-$icon-size: 36px;
+$list-max-rows: 2;
 
-$editor-photo-size: 200px;
+// tiles / images
+$tile-size: 110px;
+$image-size: 74px;
+$icon-size: 36px;
+$name-size: 36px;
+
+$editor-image-size: 200px;
 $editor-icon-size: 100px;
 
-$result-photo-size: 200px;
+$result-image-size: 200px;
 
 $time-size: 80px;
 

@@ -14,21 +14,14 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <div class="editor-photo-container">
-    <div class="editor-photo-wrapper">
-      <img #image [hidden]="!game.photo" class="editor-photo" src="{{ game.photo }}" alt="" />
-      <mat-icon *ngIf="!game.photo" class="editor-icon game-icon">image</mat-icon>
-    </div>
-    <input #fileInput style="display: none" type="file" accept="image/*" (change)="onFileSelected(fileInput)" />
-    <button mat-button color="primary" (click)="fileInput.click()">Pick photo</button>
-  </div>
+  <image-picker class="editor-image-container" [image]="game.image" [icon]="'image'" (selected)="imageSelected($event)"></image-picker>
   <div class="editor-form">
     <mat-form-field class="editor-form-field">
-      <input matInput placeholder="Name" [(ngModel)]="game.name" />
+      <input matInput placeholder="Name" autocomplete="off" [(ngModel)]="game.name" />
     </mat-form-field>
     <mat-form-field class="editor-form-field" appearance="outline">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="" minRows="2" maxRows="3" [(ngModel)]="game.description"></textarea>
+      <textarea matInput placeholder="" autocomplete="off" minRows="2" maxRows="3" [(ngModel)]="game.description"></textarea>
     </mat-form-field>
   </div>
   <div class="editor-buttons">

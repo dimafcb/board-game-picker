@@ -1,11 +1,13 @@
 import { Component, OnInit, Optional } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { defer, Observable } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
+import { SNACKBAR_CONFIG } from '../../const/snackbar-config';
+import { BggGame, BggGameFull } from '../../model/bgg/bgg-game';
 import { DialogResult } from '../../model/dialog-result';
 import { Game } from '../../model/game';
-import { GameBgg, GameBggFull } from '../../model/game-bgg';
 import { BggApiService } from '../../services/bgg-api.service';
 import { GameDexie } from '../../storage/game-dexie';
 import { Utils } from '../../utils/utils';
@@ -19,23 +21,30 @@ export class GameEditorComponent implements OnInit {
   game: Partial<Game> = {
     name: 'New game',
   };
-  gameBgg!: GameBggFull;
+  gameBgg!: BggGameFull;
   private gameDexie = new GameDexie();
 
   autocompleteControl = new FormControl();
-  autocompleteItems!: Observable<GameBgg[]>;
+  autocompleteItems!: Observable<BggGame[]>;
 
-  constructor(@Optional() private dialogRef: MatDialogRef<GameEditorComponent>, private bggApiService: BggApiService) {}
+  constructor(@Optional() private dialogRef: MatDialogRef<GameEditorComponent>, private bggApiService: BggApiService, private matSnackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.autocompleteItems = this.autocompleteControl.valueChanges.pipe(
       debounceTime(500),
       filter((value) => value?.length > 3),
+      tap((value) => {
+        this.matSnackBar.dismiss();
+      }),
       switchMap((value) =>
         defer(() =>
           this.bggApiService.searchGames({
             query: typeof value === 'string' ? value.trim() : value.name.value,
             type: 'boardgame',
+          })
+        ).pipe(
+          tap((games) => {
+            !games?.length && this.matSnackBar.open('No games found', 'OK', SNACKBAR_CONFIG());
           })
         )
       )
@@ -43,19 +52,20 @@ export class GameEditorComponent implements OnInit {
     this.autocompleteControl.valueChanges
       .pipe(
         filter((value) => typeof value !== 'string'),
-        tap((game: GameBgg) => {
+        tap((game: BggGame) => {
           this.game.name = game.name.value;
         }),
-        switchMap((game: GameBgg) => defer(() => this.bggApiService.getGameDetails({ id: game.id, type: ['boardgame', 'boardgameexpansion'] })))
+        switchMap((game: BggGame) => defer(() => this.bggApiService.getGameDetails({ id: game.id, type: ['boardgame', 'boardgameexpansion'], stats: 1 })))
       )
       .subscribe((gameFull) => {
         this.gameBgg = gameFull;
         console.log('gameFull..', gameFull);
-        this.game.idBgg = parseInt(gameFull.id, 0);
-        this.game.photo = gameFull.image;
-        this.game.playersMin = parseInt(gameFull.minplayers.value, 0);
-        this.game.playersMax = parseInt(gameFull.maxplayers.value, 0);
-        this.game.averageTimeToPlay = parseInt(gameFull.playingtime.value, 0);
+        this.game.bggId = parseInt(gameFull.id, 0);
+        this.game.image = gameFull.image;
+        this.game.playersMin = gameFull.minplayers.value;
+        this.game.playersMax = gameFull.maxplayers.value;
+        this.game.averageTimeToPlay = gameFull.playingtime.value;
+        this.game.bggRating = gameFull.statistics?.ratings?.average?.value;
       });
   }
 
@@ -72,23 +82,8 @@ export class GameEditorComponent implements OnInit {
     this.dialogRef?.close(DialogResult.Cancel);
   }
 
-  onFileSelected(element: HTMLInputElement): void {
-    console.log('onFileSelected..', element.files);
-    const imageFile = element.files?.[0];
-
-    const reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        console.log(reader.result);
-        this.game.photo = reader.result as string;
-      },
-      false
-    );
-
-    if (imageFile) {
-      reader.readAsDataURL(imageFile);
-    }
+  imageSelected(image: string): void {
+    this.game.image = image;
   }
 
   displayFn(game: any): string {

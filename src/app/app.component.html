@@ -1,74 +1,80 @@
 <div class="container">
+  <mat-slide-toggle color="primary" [(ngModel)]="editMode" (ngModelChange)="editModeChange($event.checked)">Edit mode</mat-slide-toggle>
+
   <mat-card class="section">
-    <div class="header">
-      <span *ngIf="stat.allPlayers; else noPlayersTemplate">
-        Active players:&nbsp;
-        <span class="bold"> {{ stat.activePlayers }}</span>
-        &nbsp;/&nbsp;
-        <span class="bold"> {{ stat.allPlayers }}</span>
-      </span>
-      <ng-template #noPlayersTemplate>No players, please add one</ng-template>
-      <button mat-button color="primary" class="btn btn-add" (click)="editPlayer()">Add player</button>
-    </div>
     <div class="list">
-      <div class="player animated" *ngFor="let player of players; trackBy: trackById" [ngClass]="{ disabled: player.disabled }" (click)="togglePlayer(player)">
-        <!-- <mat-icon class="player-icon">person</mat-icon> -->
-        <img *ngIf="player.photo; else noPlayerPhotoTemplate" class="photo player-photo" src="{{ player.photo }}" alt="" />
-        <ng-template #noPlayerPhotoTemplate>
-          <div class="icon-wrapper">
-            <mat-icon class="icon player-icon">person</mat-icon>
-          </div>
-        </ng-template>
+      <div class="header">
+        <div *ngIf="stat.allPlayers; else noPlayersTemplate">
+          Active players:&nbsp;
+          <span class="bold"> {{ stat.activePlayers }}</span>
+          &nbsp;/&nbsp;
+          <span class="bold"> {{ stat.allPlayers }}</span>
+        </div>
+        <ng-template #noPlayersTemplate>No players, please add one</ng-template>
+        <button mat-button color="primary" (click)="editPlayer()">Add player</button>
+      </div>
+      <div class="player animated" *ngFor="let player of players$ | async; trackBy: trackById" (click)="clickPlayer(player)">
+        <ng-container *ngTemplateOutlet="imageTemplate; context: { $implicit: player.image, class: 'player-image', icon: 'person', disabled: player.disabled }"></ng-container>
         <div class="name primary player-name">{{ player.name }}</div>
       </div>
     </div>
   </mat-card>
   <mat-card class="section">
-    <div class="header">
-      <span>
+    <div class="list">
+      <span class="header">
         Time to play:
-        <span class="bold">
+        <!-- <span class="bold">
           {{ timeToPlay.name }}
           <ng-container *ngIf="timeToPlay.text">&nbsp;({{ timeToPlay.text }})</ng-container>
-        </span>
+        </span> -->
       </span>
-    </div>
-    <div class="list">
-      <div class="time animated" *ngFor="let time of timeToPlayList" [ngClass]="{ selected: time === timeToPlay }" (click)="selectTime(time)">
-        <div class="time-value primary">{{ time.name }}</div>
-        <div *ngIf="time.text" class="time-text accent">{{ time.text }}</div>
-      </div>
+      <button mat-button [class.mat-raised-button]="time === timeToPlay" color="primary" class="time animated" *ngFor="let time of timeToPlayList$ | async" (click)="selectTime(time)">
+        <!-- <span class="time-value">{{ time.name }}</span> -->
+        <!-- <span *ngIf="time.text" class="time-text">&nbsp; -->
+        {{ time.text || time.name }}
+        <!-- </span> -->
+      </button>
+      <!-- <div class="time animated" *ngFor="let time of timeToPlayList$ | async" [ngClass]="{ selected: time === timeToPlay }"></div> -->
     </div>
   </mat-card>
   <mat-card class="section">
-    <div class="header">
-      <span *ngIf="stat.allGames; else noGamesTemplate">
-        Games for
-        <span class="bold">{{ stat.activePlayers }}</span>
-        players:&nbsp;
-        <span class="bold">{{ stat.activeGames }}</span>
-        &nbsp;/&nbsp;
-        <span class="bold">{{ stat.allGames }}</span>
-      </span>
-      <ng-template #noGamesTemplate>No games, please add one</ng-template>
-      <button mat-button color="primary" class="btn btn-add" (click)="editGame()">Add game</button>
-    </div>
     <div class="list">
-      <div class="game animated" *ngFor="let game of games; trackBy: trackById" [ngClass]="{ disabled: game.disabled }" (click)="toggleGame(game)">
-        <img *ngIf="game.photo; else noGamePhotoTemplate" class="photo game-photo" src="{{ game.photo }}" alt="" />
-        <ng-template #noGamePhotoTemplate>
-          <div class="icon-wrapper">
-            <mat-icon class="icon game-icon">image</mat-icon>
-          </div>
-        </ng-template>
+      <div class="header">
+        <div *ngIf="stat.allGames; else noGamesTemplate">
+          Games for
+          <span class="bold">{{ stat.activePlayers }}</span>
+          players:&nbsp;
+          <span class="bold">{{ stat.activeGames }}</span>
+          &nbsp;/&nbsp;
+          <span class="bold">{{ stat.allGames }}</span>
+        </div>
+        <ng-template #noGamesTemplate>No games, please add one</ng-template>
+        <button mat-button color="primary" (click)="editGame()">Add game</button>
+      </div>
+      <div class="game animated" *ngFor="let game of games$ | async; trackBy: trackById" (click)="clickGame(game)">
+        <ng-container *ngTemplateOutlet="imageTemplate; context: { $implicit: game.image, class: 'game-image', icon: 'image', disabled: game.disabled || game.disabledStatus, badge: game.bggRating }">
+        </ng-container>
+        <div *ngIf="game.disabledStatus" class="accent game-disabled-status">
+          {{ game.disabledStatus }}
+        </div>
         <div class="name primary game-name">{{ game.name }}</div>
       </div>
     </div>
   </mat-card>
 
   <div class="result-container">
-    <button mat-raised-button color="primary" class="btn btn-start" [disabled]="inProgress || !games.length" (click)="start(resultText)">Start</button>
+    <button mat-raised-button color="primary" [disabled]="inProgress" (click)="start(resultText)">Start</button>
     <div #resultText class="result-text animated"></div>
-    <img class="result-image animated" *ngIf="result" src="{{ result.photo }}" alt="" />
+    <img class="result-image animated" *ngIf="result" src="{{ result.image }}" alt="" />
   </div>
 </div>
+
+<ng-template #imageTemplate let-image let-class="class" let-icon="icon" let-disabled="disabled" let-badge="badge">
+  <div class="wrapper" [ngClass]="{ disabled: disabled }" matBadge="{{ badge | number: '1.1-1' }}" [matBadgeHidden]="!badge" matBadgeOverlap="false">
+    <img *ngIf="image; else noImageTemplate" class="image {{ class }}" src="{{ image }}" alt="" />
+    <ng-template #noImageTemplate>
+      <mat-icon class="icon">{{ icon }}</mat-icon>
+    </ng-template>
+    <ng-content></ng-content>
+  </div>
+</ng-template>

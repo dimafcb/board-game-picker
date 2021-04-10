@@ -10,7 +10,7 @@ export class GameDexie extends Dexie {
     super('GameDexie');
     this.version(1).stores({
       players: 'id, dateCreated',
-      games: 'id, dateCreated, rating',
+      games: 'id, dateCreated, rating, bggRating',
     });
 
     this.players = this.table('players');
