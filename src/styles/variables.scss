@@ -1,11 +1,11 @@
 :root {
   --primary-color: #1565c0;
   --primary-contrast: #ffffff;
-  --primary-color-fade: #1565c080;
+  --primary-color-fade: #1565c0bb;
 
   --accent-color: #616161;
   --accent-contrast: #ffffff;
-  --accent-color-fade: #61616180;
+  --accent-color-fade: #616161bb;
 }
 
 $primary-color: var(--primary-color);
@@ -58,19 +58,22 @@ $toolbar-height: 36px;
 $list-max-rows: 2;
 
 // tiles / images
-$tile-size: 110px;
-$image-size: 74px;
-$icon-size: 36px;
-$name-size: 36px;
+$tile-size: 120px;
+$image-size: #{$tile-size * 2 / 3};
+$icon-size: #{$tile-size / 3};
+$name-size: #{$font-size-L * 2};
 
 $editor-image-size: 200px;
 $editor-icon-size: 100px;
 
 $result-image-size: 200px;
 
+$button-small-size: 24px;
+
 $time-size: 80px;
 
 $default-margin: 10px;
+$small-margin: 5px;
 
 @keyframes colorChange {
   0% {
@@ -100,4 +103,9 @@ $default-margin: 10px;
   100% {
     filter: unset;
   }
+}
+
+@mixin disabled {
+  opacity: 0.4;
+  filter: grayscale(1);
 }

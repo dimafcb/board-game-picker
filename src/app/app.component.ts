@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, defer, of } from 'rxjs';
-import { debounceTime, sampleTime, share, switchMap, take, tap } from 'rxjs/operators';
-import { GameEditorComponent } from './components/game-editor/game-editor.component';
-import { PlayerEditorComponent } from './components/player-editor/player-editor.component';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject, combineLatest, defer, of, Subject } from 'rxjs';
+import { debounceTime, map, share, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { firstBy } from 'thenby';
+import { GameEditorComponent } from './components/editor/game-editor/game-editor.component';
+import { PlayerEditorComponent } from './components/editor/player-editor/player-editor.component';
 import { TIME_TO_PLAY_LIST } from './const/time-to-play';
 import { DialogResult } from './model/dialog-result';
 import { Game } from './model/game';
@@ -16,16 +17,12 @@ import { Utils } from './utils/utils';
 
 const GAMES_DELAY = 100;
 
-let playersDexieQuery = 0;
-
 const DEXIE_PLAYERS_QUERY_LOG = <T>(value: T) => {
-  console.log(`DEXIE..........................................PLAYERS_${++playersDexieQuery}`, value);
+  console.log(`DEXIE..........................................PLAYERS`, value);
 };
 
-let gamesDexieQuery = 0;
-
 const GAMES_LOG_QUERY_LOG = <T>(value: T) => {
-  console.log(`DEXIE..........................................GAMES_${++gamesDexieQuery}`, value);
+  console.log(`DEXIE..........................................GAMES`, value);
 };
 
 @Component({
@@ -37,7 +34,7 @@ export class AppComponent {
   // players
   playersSort: keyof Player = 'dateCreated';
 
-  private getPlayersFromDexie$ = defer(() => this.gameDexie.players.toCollection().sortBy(this.playersSort)).pipe(
+  private getPlayersFromDexie$ = defer(() => this.gameDexie.players.toCollection().toArray()).pipe(
     tap(DEXIE_PLAYERS_QUERY_LOG),
     tap((players) => {
       this.stat.allPlayers = players.length;
@@ -55,13 +52,11 @@ export class AppComponent {
 
   // timeToPlay
   timeToPlayList$ = of(TIME_TO_PLAY_LIST);
-  timeToPlayChange$ = new BehaviorSubject<void>(undefined as void);
-  timeToPlay: TimeToPlay = TIME_TO_PLAY_LIST[0];
+  timeToPlayChange$ = new BehaviorSubject<TimeToPlay>(TIME_TO_PLAY_LIST[0]);
 
   // games
-  gamesSort: keyof Game = 'bggRating';
 
-  private getGamesFromDexie$ = defer(() => this.gameDexie.games.toCollection().reverse().sortBy(this.gamesSort)).pipe(tap(GAMES_LOG_QUERY_LOG));
+  private getGamesFromDexie$ = defer(() => this.gameDexie.games.toCollection().reverse().toArray()).pipe(tap(GAMES_LOG_QUERY_LOG));
   private gamesChange$ = new BehaviorSubject<void>(undefined as void);
 
   games$ = combineLatest([
@@ -73,7 +68,7 @@ export class AppComponent {
     this.timeToPlayChange$,
   ]).pipe(
     debounceTime(GAMES_DELAY),
-    switchMap(([players]) => {
+    switchMap(([players, gamesChange, timeToPlay]) => {
       return this.getGamesFromDexie$.pipe(
         tap((games) => {
           const activePlayers = players.filter((p) => !p.disabled).length;
@@ -81,10 +76,10 @@ export class AppComponent {
             if (g.playersMin && g.playersMin > activePlayers) {
               g.disabledStatus = `min. ${g.playersMin} players`;
             } else if (g.playersMax && g.playersMax < activePlayers) {
-              g.disabledStatus = `max. ${g.playersMin} players`;
-            } else if (this.timeToPlay.min && g.averageTimeToPlay < this.timeToPlay.min) {
+              g.disabledStatus = `max. ${g.playersMax} players`;
+            } else if (timeToPlay.min && g.averageTimeToPlay < timeToPlay.min) {
               g.disabledStatus = `too fast`;
-            } else if (this.timeToPlay.max && g.averageTimeToPlay > this.timeToPlay.max) {
+            } else if (timeToPlay.max && g.averageTimeToPlay > timeToPlay.max) {
               g.disabledStatus = `too long`;
             } else {
               g.disabledStatus = undefined;
@@ -98,21 +93,27 @@ export class AppComponent {
             this.stat.allGames,
             games.map((g) => g.disabled + '--------------' + g.disabledStatus + '-----------------' + g.name)
           );
-        })
+        }),
+        map((games) => games.sort(firstBy('disabledStatus', 'asc').thenBy('disabled', 'asc').thenBy('rating', 'desc').thenBy('name')))
       );
     }),
     share()
   );
+  startGame = new Subject<HTMLDivElement>();
 
   stat: Stat = { activeGames: 0, activePlayers: 0, allGames: 0, allPlayers: 0 };
-  editMode = false;
 
   result?: Game;
   inProgress = false;
 
   private gameDexie = new GameDexie();
 
-  constructor(private dialogService: DialogService) {}
+  constructor(private dialogService: DialogService) {
+    this.startGame.pipe(withLatestFrom(this.games$)).subscribe(([el, games]) => {
+      console.log('startGame', el, games);
+      this.pickRandom(el, games);
+    });
+  }
 
   // players
 
@@ -120,124 +121,74 @@ export class AppComponent {
   //   this.gameDexie.players.delete(player.id).then(() => this.fetchPlayers());
   // }
 
-  editPlayer(player?: Player): void {
-    this.dialogService
-      .open<PlayerEditorComponent>(PlayerEditorComponent, {}, (dialogRef) => {
-        if (player?.id) {
-          dialogRef.componentInstance.player = Object.assign({}, player);
-        }
-      })
-      .subscribe((result) => {
-        console.log('editPlayer', result);
-        if (result === DialogResult.Ok) {
-          this.playersChange$.next();
-        }
-      });
-  }
-
-  clickPlayer(player: Player): void {
-    if (this.editMode) {
-      this.editPlayer(player);
-    } else {
-      this.gameDexie.players.update(player.id, {
-        disabled: !player.disabled,
-      });
+  async editPlayer(event: Event, player?: Player): Promise<void> {
+    event.stopPropagation();
+    const result = await this.dialogService.open<PlayerEditorComponent>(PlayerEditorComponent, {}, (dialogRef) => {
+      if (player?.id) {
+        dialogRef.componentInstance.player = Object.assign({}, player);
+      }
+    });
+    console.log('editPlayer', result);
+    if (result === DialogResult.Ok) {
       this.playersChange$.next();
     }
   }
 
-  // private fetchGames(): void {
-  //   this.gamesSubscription = from(this.gameDexie.games.toCollection().sortBy(this.gamesSort))
-  //     // .pipe(delay(1000))
-  //     .subscribe({
-  //       next: (games) => {
-  //         this.games = games;
-  //         const activePlayers = 1; // this.players.filter((p) => !p.disabled).length;
-  //         this.games.forEach((g) => {
-  //           if ((g.playersMin && g.playersMin > activePlayers) || (g.playersMax && g.playersMax < activePlayers)) {
-  //             g.disabledStatus = `${g.playersMin} - ${g.playersMax} players`;
-  //           } else if (this.timeToPlay.min && g.averageTimeToPlay < this.timeToPlay.min) {
-  //             g.disabledStatus = `too fast`;
-  //           } else if (this.timeToPlay.max && g.averageTimeToPlay > this.timeToPlay.max) {
-  //             g.disabledStatus = `too long`;
-  //           }
-  //         });
-  //         this.stat.allGames = this.games.length;
-  //         this.stat.activeGames = this.games.filter((p) => !p.disabled).length;
-  //       },
-  //     });
-  // }
-
-  editGame(game?: Game): void {
-    this.dialogService
-      .open<GameEditorComponent>(GameEditorComponent, {}, (dialogRef) => {
-        if (game?.id) {
-          dialogRef.componentInstance.game = Object.assign({}, game);
-        }
-      })
-      .subscribe((result) => {
-        console.log('editPlayer', result);
-        if (result === DialogResult.Ok) {
-          this.gamesChange$.next();
-        }
-      });
+  async playerAction(player: Player): Promise<void> {
+    await this.gameDexie.players.update(player.id, {
+      disabled: !player.disabled,
+    });
+    this.playersChange$.next();
   }
 
-  clickGame(game: Game): void {
-    if (this.editMode) {
-      this.editGame(game);
-    } else {
-      if (game.disabledStatus) {
-        return;
+  async editGame(event: Event, game?: Game): Promise<void> {
+    event.stopPropagation();
+    const result = await this.dialogService.open<GameEditorComponent>(GameEditorComponent, {}, (dialogRef) => {
+      if (game?.id) {
+        dialogRef.componentInstance.game = Object.assign({}, game);
       }
-      this.gameDexie.games
-        .update(game.id, {
-          disabled: !game.disabled,
-        })
-        .then(() => this.gamesChange$.next());
+    });
+    console.log('editPlayer', result);
+    if (result === DialogResult.Ok) {
+      this.gamesChange$.next();
     }
   }
 
-  async start(el: HTMLDivElement): Promise<void> {
+  async gameAction(game: Game): Promise<void> {
+    if (game.disabledStatus) {
+      return;
+    }
+    await this.gameDexie.games.update(game.id, {
+      disabled: !game.disabled,
+    });
+    this.gamesChange$.next();
+  }
+
+  private async pickRandom(el: HTMLDivElement, games: Game[]): Promise<void> {
     this.inProgress = true;
     this.result = undefined;
-
-    const scrabble = new TextScramble(el);
-
-    console.log('START..');
-
-    const games_full = await this.games$
-      .pipe(
-        sampleTime(0),
-        take(1),
-        tap((g) => console.log('START..toPromise1', g.length, g))
-      )
-      .toPromise();
-
-    console.log('START.. games_full', games_full.length, games_full);
-
-    const games = games_full.filter((g) => !g.disabled && !g.disabledStatus);
-
-    console.log('START.. games', games.length, games);
-
-    const result = Utils.randomItem(games);
+    const activeGames = games.filter((g) => !g.disabled && !g.disabledStatus);
+    const result = Utils.randomItem(activeGames);
     console.log('START..', result);
 
     if (result) {
+      const scrabble = new TextScramble(el);
       await scrabble.setText(result.name);
       this.result = result;
     } else {
-      el.innerHTML = 'NO GAMES';
+      el.innerHTML = 'No games';
     }
     this.inProgress = false;
+  }
+
+  start(el: HTMLDivElement): void {
+    this.startGame.next(el);
   }
 
   trackById = (i: number, item: Game | Player): string => item.id;
 
   selectTime(timeToPlay: TimeToPlay): void {
-    this.timeToPlay = timeToPlay;
-
-    this.timeToPlayChange$.next();
+    this.timeToPlayChange$.next(timeToPlay);
   }
 
   editModeChange(editMode: boolean): void {}

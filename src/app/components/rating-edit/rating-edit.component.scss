@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+.rating-container {
+  position: relative;
+
+  .rating-overlay {
+    position: absolute;
+    display: inline-flex;
+    top: 30px;
+    left: -125px;
+    z-index: 1;
+    padding: $default-margin;
+    background: $bg-color;
+    box-shadow: $box-shadow-accent;
+
+    button.rating {
+      transform: scale(1.4);
+
+      &:hover {
+        & ~ button.rating {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

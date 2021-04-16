@@ -1,0 +1,11 @@
+@import '../../../../styles/variables';
+
+.player {
+  border-radius: 50%;
+  overflow: hidden;
+
+  .name {
+    height: #{$font-size-L * 2};
+    padding: $small-margin;
+  }
+}

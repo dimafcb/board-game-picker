@@ -1,7 +1,7 @@
 @import '../styles/variables';
 
 .container {
-  padding: 20px;
+  // padding: 20px;
 
   .section {
     &:not(:last-child) {
@@ -24,82 +24,12 @@
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  max-height: calc(#{$list-max-rows * $tile-size} + #{2 * $list-max-rows * $default-margin});
   overflow-y: auto;
 }
 
-.game,
-.player {
+player-tile,
+game-tile {
   margin: $default-margin;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  width: $tile-size;
-  height: $tile-size;
-
-  &:hover {
-    .wrapper {
-      .image,
-      .icon {
-        transform: scale(1.1);
-      }
-    }
-
-    .name {
-      filter: hue-rotate(45deg);
-    }
-  }
-
-  .name {
-    font-weight: $font-weight-normal;
-    line-height: $font-size-M;
-    height: $name-size;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: $tile-size;
-    height: $image-size;
-
-    .icon {
-      width: $icon-size;
-      height: $icon-size;
-      font-size: $icon-size;
-    }
-
-    .image {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
-}
-
-.player-image {
-  border-radius: 50%;
-}
-
-.game {
-  .game-disabled-status {
-    position: absolute;
-    left: 5%;
-    right: 5%;
-    background: $accent-contrast;
-    box-shadow: $box-shadow-accent;
-    z-index: 1;
-    overflow: auto;
-    border-radius: 3px;
-    height: fit-content;
-    margin: auto;
-    top: 0;
-    bottom: $name-size;
-  }
 }
 
 .time {

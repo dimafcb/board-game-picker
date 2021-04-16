@@ -1,0 +1,7 @@
+<span class="animated rating-container">
+  <div *ngIf="editMode" class="rating-overlay">
+    <button class="rating mini" mat-icon-button color="primary" *ngFor="let item of items; let i = index" [ngClass]="{ selected: item <= rating }" (click)="select(item)">
+      <mat-icon>{{ item <= rating ? 'star' : 'star_border' }}</mat-icon>
+    </button>
+  </div>
+</span>

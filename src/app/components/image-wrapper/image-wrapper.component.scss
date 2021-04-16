@@ -1,0 +1,21 @@
+@import '../../../styles/variables';
+
+.wrapper {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .icon {
+    width: $icon-size;
+    height: $icon-size;
+    font-size: $icon-size;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,43 @@
+@import './variables';
+
+.tile {
+  cursor: pointer;
+  position: relative;
+  width: $tile-size;
+  height: $tile-size;
+  text-align: center;
+
+  &.disabled {
+    opacity: 1;
+    filter: unset;
+
+    div:not(.always-active) {
+      @extend .disabled;
+    }
+  }
+
+  image-wrapper {
+    display: initial;
+  }
+
+  &:hover {
+    image-wrapper > .wrapper > * {
+      transform: scale(1.1);
+    }
+  }
+
+  .name {
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: $accent-color-fade;
+    color: $accent-contrast;
+    font-weight: $font-weight-normal;
+    line-height: $font-size-L;
+    height: $name-size;
+    padding: 0 $small-margin;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

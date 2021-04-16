@@ -4,6 +4,7 @@ export interface Player {
   dateCreated: number;
   image?: string;
   disabled?: boolean;
+  birthday?: Date;
 
   // bgg
   bggId?: number;

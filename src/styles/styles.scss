@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'variables';
+@import 'tile';
+@import 'editor';
 @import '~@angular/material/prebuilt-themes/indigo-pink';
 @import '~@angular/material/theming';
 @include mat-core();
@@ -15,7 +17,11 @@ $material-palette: (
     warning: $warning-contrast,
   ),
 );
-$material-theme: mat-light-theme(mat-palette($material-palette, primary), mat-palette($material-palette, accent), mat-palette($material-palette, warning));
+$material-theme: mat-light-theme(
+  mat-palette($material-palette, primary),
+  mat-palette($material-palette, accent),
+  mat-palette($material-palette, warning)
+);
 @include angular-material-theme($material-theme);
 
 html,
@@ -37,7 +43,7 @@ body {
 }
 
 .disabled {
-  opacity: 0.3;
+  @include disabled;
 }
 
 .primary {
@@ -50,6 +56,15 @@ body {
 
 .bold {
   font-weight: $font-weight-bold;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+
+  &-50 {
+    flex: 0 0 50%;
+  }
 }
 
 .mat-dialog-container {
@@ -79,5 +94,20 @@ body {
     button {
       color: $warning-contrast;
     }
+  }
+}
+
+.mat-badge-content {
+  right: 8px !important;
+  top: -8px !important;
+}
+
+button.mat-icon-button.mini {
+  height: $button-small-size;
+  width: $button-small-size;
+  line-height: $button-small-size;
+
+  mat-icon {
+    font-size: $font-size-L;
   }
 }

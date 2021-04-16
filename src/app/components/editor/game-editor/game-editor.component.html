@@ -19,10 +19,17 @@
     <mat-form-field class="editor-form-field">
       <input matInput placeholder="Name" autocomplete="off" [(ngModel)]="game.name" />
     </mat-form-field>
-    <mat-form-field class="editor-form-field" appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea matInput placeholder="" autocomplete="off" minRows="2" maxRows="3" [(ngModel)]="game.description"></textarea>
-    </mat-form-field>
+    <div class="rating-container">
+      <span class="accent flex-50">
+        Your rating:&nbsp;
+        <span rating-badge [value]="game.rating" (action)="ratingEditor.toggle()" [ratingHoverable]="true" [tooltip]="'Click to edit'"></span>
+        <rating-edit #ratingEditor [(value)]="game.rating"></rating-edit>
+      </span>
+      <span class="accent flex-50">
+        BGG rating:&nbsp;
+        <span rating-badge [value]="game.bggRating" [ratingBgg]="true" [tooltip]="'BoardGameGeek rating'"></span>
+      </span>
+    </div>
   </div>
   <div class="editor-buttons">
     <button mat-button color="accent" (click)="cancel()">Cancel</button>

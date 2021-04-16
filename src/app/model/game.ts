@@ -7,7 +7,6 @@ export interface Game {
   dateCreated: number;
   rating?: number; // combined rating
   image?: string;
-  description?: string;
   disabledStatus?: string;
 
   // bgg

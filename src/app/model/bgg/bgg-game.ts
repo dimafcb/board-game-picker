@@ -1,7 +1,7 @@
 import { BggValueWrapper } from './bgg-value-wrapper';
 
 export interface BggGame {
-  id: string;
+  id: number;
   name: BggValueWrapper;
   yearpublished?: BggValueWrapper;
 }
@@ -15,6 +15,23 @@ export interface BggGameFull extends BggGame {
   statistics?: {
     ratings?: {
       average?: BggValueWrapper<number>;
+    };
+  };
+}
+
+export interface BggGameCollection {
+  image: string;
+  name?: {
+    '#text': string;
+  };
+  objectid: number;
+  stats?: {
+    maxplayers: number;
+    minplayers: number;
+    playingtime: number;
+    rating?: {
+      average?: BggValueWrapper<number>;
+      value?: number;
     };
   };
 }
