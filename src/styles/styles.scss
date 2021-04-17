@@ -68,9 +68,25 @@ body {
   }
 }
 
+.sticky {
+  position: sticky;
+  z-index: 1;
+
+  &-top {
+    @extend .sticky;
+    top: 0px;
+  }
+  &-bottom {
+    @extend .sticky;
+    bottom: 0px;
+  }
+}
 .mat-dialog-container {
   padding: 0px !important;
   max-width: 600px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 .mat-toolbar {
@@ -104,11 +120,27 @@ body {
 }
 
 button.mat-icon-button.mini {
-  height: $button-small-size;
-  width: $button-small-size;
+  @include height-width($button-small-size);
   line-height: $button-small-size;
 
   mat-icon {
     font-size: $font-size-L;
   }
+}
+
+button.mat-button-base {
+  &:not(.mat-icon-button, .mat-fab, .mat-mini-fab) {
+    border-radius: 18px;
+  }
+}
+
+.mat-bottom-sheet-container {
+  padding: 0 !important;
+}
+
+.editor-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 100px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

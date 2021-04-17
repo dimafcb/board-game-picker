@@ -1,7 +1,9 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -17,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { GameEditorComponent } from './components/editor/game-editor/game-editor.component';
+import { ListEditorComponent } from './components/editor/list-editor/list-editor.component';
 import { PlayerEditorComponent } from './components/editor/player-editor/player-editor.component';
 import { ImagePickerComponent } from './components/image-picker/image-picker.component';
 import { ImageWrapperComponent } from './components/image-wrapper/image-wrapper.component';
@@ -25,6 +28,8 @@ import { RatingEditComponent } from './components/rating-edit/rating-edit.compon
 import { GameTileComponent } from './components/tile/game-tile/game-tile.component';
 import { PlayerTileComponent } from './components/tile/player-tile/player-tile.component';
 import { DATE_PROVIDER } from './providers/date-format.provider';
+import { MAT_TOOLTIP_CONFIG } from './providers/tooltip-config-token';
+import { ResultDialogComponent } from './components/result-dialog/result-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +42,8 @@ import { DATE_PROVIDER } from './providers/date-format.provider';
     PlayerTileComponent,
     GameTileComponent,
     ImageWrapperComponent,
+    ListEditorComponent,
+    ResultDialogComponent,
   ],
   imports: [
     // angular
@@ -46,6 +53,7 @@ import { DATE_PROVIDER } from './providers/date-format.provider';
     ReactiveFormsModule,
     // material
     MatAutocompleteModule,
+    MatBottomSheetModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -57,10 +65,12 @@ import { DATE_PROVIDER } from './providers/date-format.provider';
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
+    // material cdk
+    DragDropModule,
     OverlayModule,
     // 3rd party
   ],
-  providers: [DATE_PROVIDER],
+  providers: [DATE_PROVIDER, MAT_TOOLTIP_CONFIG],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

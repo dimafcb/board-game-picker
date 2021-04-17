@@ -17,9 +17,6 @@ import { Utils } from '../../../utils/utils';
   styleUrls: ['./player-editor.component.scss'],
 })
 export class PlayerEditorComponent implements OnInit, OnDestroy {
-  // @ViewChild('image', { static: true }) public imageElRef!: ElementRef<HTMLImageElement>;
-  // cropper!: Cropper;
-
   playerBggControl = new FormControl('');
 
   subscription!: Subscription;
@@ -54,10 +51,6 @@ export class PlayerEditorComponent implements OnInit, OnDestroy {
 
   cancel(): void {
     this.dialogRef?.close(DialogResult.Cancel);
-
-    // https://www.boardgamegeek.com/xmlapi2/collection?username=samort7&subtype=boardgame&own=1
-
-    // https://www.boardgamegeek.com/xmlapi2/users?name=
   }
 
   imageSelected(image: string): void {

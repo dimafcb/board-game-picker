@@ -1,11 +1,16 @@
 @import '../../../../styles/variables';
 
+$player-size: 80px;
+$name-size: divide($player-size, 4);
+
 .player {
+  @include height-width($player-size);
   border-radius: 50%;
   overflow: hidden;
 
   .name {
-    height: divide($tile-size, 4);
-    padding: $small-margin;
+    height: $name-size;
+    line-height: $name-size;
+    font-size: $font-size-S;
   }
 }

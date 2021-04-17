@@ -7,24 +7,12 @@
   right: 0;
   bottom: $footer-height;
   overflow-y: auto;
-
-  .section {
-    &:not(:last-child) {
-      margin-bottom: $default-margin;
-    }
-
-    .header {
-      text-align: center;
-      padding: $default-margin;
-
-      button {
-        margin: $default-margin;
-      }
-    }
-  }
+  display: flex;
+  align-items: center;
 }
 
-.list {
+.section {
+  padding: $default-margin;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -45,33 +33,6 @@ game-tile {
   }
 }
 
-.result-container {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  button {
-    margin: $default-margin;
-  }
-
-  .result-image {
-    max-width: $result-image-size;
-    max-height: $result-image-size;
-    width: auto;
-    height: auto;
-    animation: imageBlur 0.5s;
-  }
-
-  .result-text {
-    font-size: $font-size-XXL;
-    padding: 20px;
-    color: var(--primary-color);
-    font-weight: $font-weight-bold;
-    // animation: letterSpacing 1s;
-  }
-}
-
 .footer {
   position: fixed;
   bottom: 0;
@@ -83,4 +44,41 @@ game-tile {
   align-items: center;
   border-top: $accent-color-fade solid 2px;
   background: $primary-contrast;
+
+  .footer-start {
+    height: $button-large-size;
+    min-width: 200px;
+    font-size: $font-size-XL;
+    border-radius: divide($button-large-size, 2);
+  }
+}
+
+.editor-section {
+  overflow-y: auto;
+  background: $bg-color;
+  padding: 0 $default-margin;
+  max-height: 50vh;
+  max-width: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .editor-item {
+    display: flex;
+    align-items: center;
+    // @include height-width($tile-size);
+  }
+
+  .editor-add {
+    padding: $default-margin;
+    background: $bg-color;
+    z-index: 1;
+    flex: 1 0 100%;
+    border-top: $accent-color-fade solid 1px;
+
+    button {
+      border: dashed 2px;
+      width: 100%;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Game } from '../model/game';
 import { Player } from '../model/player';
+import { Stat } from '../model/stat';
 import { TimeToPlay } from '../model/time-to-play';
 import { Utils } from '../utils/utils';
 
@@ -27,6 +28,11 @@ export class GamesService {
     //   'UPDATE_STAT.. games',
     //   games.map((g) => g.disabled + '--------------' + g.disabledStatus + '-----------------' + g.name)
     // );
+  }
+
+  updateGamesStat(games: Game[], stat: Stat): void {
+    stat.allGames = games.length;
+    stat.activeGames = games.filter((g) => !g.disabled && !g.disabledStatus).length;
   }
 
   pickRandom(games: Game[]): Game | undefined {

@@ -1,0 +1,24 @@
+@import '../../../styles/variables';
+
+.result-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    margin: $default-margin;
+  }
+
+  .result-image {
+    @include height-width(auto, $result-image-size);
+    animation: imageBlur 0.5s;
+  }
+
+  .result-text {
+    font-size: $font-size-XXL;
+    padding: 20px;
+    color: var(--primary-color);
+    font-weight: $font-weight-bold;
+  }
+}

@@ -9,9 +9,11 @@ import { DialogResult } from '../model/dialog-result';
 export class DialogService {
   constructor(private dialog: MatDialog) {}
 
-  open<T>(component: ComponentType<T>, config: MatDialogConfig, callback: (dialogRef: MatDialogRef<T>) => void): Promise<DialogResult> {
+  open<T>(component: ComponentType<T>, config?: MatDialogConfig, callback?: (dialogRef: MatDialogRef<T>) => void): Promise<DialogResult> {
     const dialogRef = this.dialog.open(component, config);
-    callback(dialogRef);
+    if (callback) {
+      callback(dialogRef);
+    }
     return dialogRef.afterClosed().toPromise();
   }
 }

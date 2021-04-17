@@ -1,12 +1,12 @@
 export class TextScramble {
-  el: HTMLDivElement;
+  el: HTMLElement;
   chars = '!<>-_\\/%~[]{}—=+*^?#________';
   queue: any[] = [];
   frameRequest = 0;
   frame = 0;
   resolve!: (value?: string) => void;
 
-  constructor(el: any) {
+  constructor(el: HTMLElement) {
     this.el = el;
     this.update = this.update.bind(this);
   }

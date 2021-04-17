@@ -1,10 +1,9 @@
 @import './variables';
 
 .tile {
+  @include height-width($tile-size);
   cursor: pointer;
   position: relative;
-  width: $tile-size;
-  height: $tile-size;
   text-align: center;
 
   &.disabled {

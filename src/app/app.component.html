@@ -1,67 +1,89 @@
+<!-- games list -->
 <div class="container">
-  <mat-card class="section">
-    <div class="list">
-      <div class="header">
-        <div *ngIf="stat.allPlayers; else noPlayersTemplate">
-          Active players:&nbsp;
-          <span class="bold"> {{ stat.activePlayers }}</span>
-          &nbsp;/&nbsp;
-          <span class="bold"> {{ stat.allPlayers }}</span>
-        </div>
-        <ng-template #noPlayersTemplate>No players, please add one</ng-template>
-        <button mat-fab color="primary" (click)="editPlayer($event)">
-          <!-- Add player -->
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <player-tile
-        *ngFor="let player of players$ | async; trackBy: trackById"
-        [item]="player"
-        (action)="playerAction($event)"
-      ></player-tile>
-    </div>
-  </mat-card>
-  <mat-card class="section">
-    <div class="list">
-      <span class="header"> Time to play: </span>
-      <button
-        mat-button
-        [class.mat-raised-button]="time === (timeToPlayChange$ | async)"
-        color="primary"
-        class="time animated"
-        *ngFor="let time of timeToPlayList$ | async"
-        (click)="selectTime(time)"
-      >
-        {{ time.text || time.name }}
-      </button>
-    </div>
-  </mat-card>
-  <mat-card class="section">
-    <div class="list">
-      <!-- <div class="header">
-        <div *ngIf="stat.allGames; else noGamesTemplate">
-          Games for
-          <span class="bold">{{ stat.activePlayers }}</span>
-          players:&nbsp;
-          <span class="bold">{{ stat.activeGames }}</span>
-          &nbsp;/&nbsp;
-          <span class="bold">{{ stat.allGames }}</span>
-        </div>
-        <ng-template #noGamesTemplate>No games, please add one</ng-template>
-        <button mat-button color="primary" (click)="editGame($event)">Add game</button>
-      </div> -->
-      <game-tile *ngFor="let game of games$ | async; trackBy: trackById" [item]="game" (action)="gameAction($event)"></game-tile>
-    </div>
-  </mat-card>
-
-  <div class="result-container">
-    <div #resultText class="result-text animated"></div>
-    <img class="result-image animated" *ngIf="result" src="{{ result.image }}" alt="" />
+  <div class="section">
+    <game-tile *ngFor="let game of games$ | async; trackBy: trackById" [item]="game" (action)="gameAction($event)"></game-tile>
   </div>
 </div>
 
+<!-- footer -->
 <div class="footer">
-  <button mat-button color="primary">Edit games</button>
-  <button mat-raised-button color="primary" [disabled]="inProgress" (click)="start(resultText)">Start</button>
-  <button mat-button color="primary">Edit players</button>
+  <!-- footer: edit games -->
+  <span class="footer-games">
+    <span *ngIf="stat.allGames; else noGamesTemplate">
+      Games:&nbsp;
+      <span class="bold"> {{ stat.activeGames }}</span>
+      &nbsp;/&nbsp;
+      <span class="bold"> {{ stat.allGames }}</span>
+    </span>
+    <ng-template #noGamesTemplate>No games</ng-template>
+    <button mat-button color="primary" (click)="openPanel(gamesPanel)">Edit</button>
+  </span>
+
+  <!-- footer: start button -->
+  <button class="footer-start" mat-raised-button color="primary" [disabled]="inProgress" (click)="start()">Start</button>
+
+  <!-- footer: edit players -->
+  <span class="footer-players">
+    <span *ngIf="stat.allPlayers; else noPlayersTemplate">
+      Players:&nbsp;
+      <span class="bold"> {{ stat.activePlayers }}</span>
+      &nbsp;/&nbsp;
+      <span class="bold"> {{ stat.allPlayers }}</span>
+    </span>
+    <ng-template #noPlayersTemplate>No players</ng-template>
+    <button mat-button color="primary" (click)="openPanel(playersPanel)">Edit</button>
+  </span>
 </div>
+
+<!-- PANEL players -->
+<ng-template #playersPanel>
+  <mat-toolbar color="primary" class="sticky"> Edit players </mat-toolbar>
+  <div class="editor-section">
+    <div *ngFor="let player of players$ | async as playersList; trackBy: trackById" class="editor-item">
+      <player-tile [item]="player" (action)="playerAction(player)"></player-tile>
+      <button mat-button color="primary" (click)="editPlayer(player)">Edit</button>
+      <button mat-button color="accent" (click)="deletePlayer(player)">Delete</button>
+    </div>
+    <div class="editor-add sticky-bottom">
+      <button mat-stroked-button color="primary" (click)="editPlayer()">
+        <mat-icon>add</mat-icon>
+        Add player
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- PANEL Games -->
+<ng-template #gamesPanel>
+  <mat-toolbar color="primary" class="sticky"> Edit games </mat-toolbar>
+  <div class="editor-section">
+    <div *ngFor="let game of gamesAll$ | async; trackBy: trackById" class="editor-item">
+      <game-tile [editMode]="true" [item]="game" (action)="gameAction($event)"></game-tile>
+      <button mat-button color="primary" (click)="editGame(game)">Edit</button>
+      <button mat-button color="accent" (click)="deleteGame(game)">Delete</button>
+    </div>
+    <div class="editor-add sticky-bottom">
+      <button mat-stroked-button color="primary" (click)="editGame()">
+        <mat-icon>add</mat-icon>
+        Add game
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- PANEL Time to play -->
+<ng-template #timeToPlayPanel>
+  <mat-toolbar color="primary" class="sticky"> Time to play </mat-toolbar>
+  <div class="editor-section">
+    <button
+      mat-button
+      [class.mat-raised-button]="time === (timeToPlayChange$ | async)"
+      color="primary"
+      class="time animated"
+      *ngFor="let time of timeToPlayList$ | async"
+      (click)="selectTime(time)"
+    >
+      {{ time.text || time.name }}
+    </button>
+  </div>
+</ng-template>

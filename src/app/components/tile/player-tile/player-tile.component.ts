@@ -3,7 +3,7 @@ import { Player } from '../../../model/player';
 import { BasicTileComponent } from '../basic-tile.component';
 
 @Component({
-  selector: 'player-tile',
+  selector: 'player-tile, [player-tile]',
   templateUrl: './player-tile.component.html',
   styleUrls: ['./player-tile.component.scss'],
 })
