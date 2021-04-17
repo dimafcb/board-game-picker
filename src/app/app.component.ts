@@ -1,9 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, combineLatest, defer, of, Subject } from 'rxjs';
 import { debounceTime, map, share, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { firstBy } from 'thenby';
 import { GameEditorComponent } from './components/editor/game-editor/game-editor.component';
 import { PlayerEditorComponent } from './components/editor/player-editor/player-editor.component';
+import { SNACKBAR_CONFIG } from './const/snackbar-config';
 import { TIME_TO_PLAY_LIST } from './const/time-to-play';
 import { DialogResult } from './model/dialog-result';
 import { Game } from './model/game';
@@ -11,9 +13,9 @@ import { Player } from './model/player';
 import { Stat } from './model/stat';
 import { TimeToPlay } from './model/time-to-play';
 import { DialogService } from './services/dialog.service';
+import { GamesService } from './services/games.service';
 import { GameDexie } from './storage/game-dexie';
 import { TextScramble } from './utils/text-scramble';
-import { Utils } from './utils/utils';
 
 const GAMES_DELAY = 100;
 
@@ -71,28 +73,7 @@ export class AppComponent {
     switchMap(([players, gamesChange, timeToPlay]) => {
       return this.getGamesFromDexie$.pipe(
         tap((games) => {
-          const activePlayers = players.filter((p) => !p.disabled).length;
-          games.forEach((g) => {
-            if (g.playersMin && g.playersMin > activePlayers) {
-              g.disabledStatus = `min. ${g.playersMin} players`;
-            } else if (g.playersMax && g.playersMax < activePlayers) {
-              g.disabledStatus = `max. ${g.playersMax} players`;
-            } else if (timeToPlay.min && g.averageTimeToPlay < timeToPlay.min) {
-              g.disabledStatus = `too fast`;
-            } else if (timeToPlay.max && g.averageTimeToPlay > timeToPlay.max) {
-              g.disabledStatus = `too long`;
-            } else {
-              g.disabledStatus = undefined;
-            }
-          });
-          this.stat.allGames = games.length;
-          this.stat.activeGames = games.filter((p) => !p.disabled && !p.disabledStatus).length;
-          console.log(
-            'UPDATE_STAT.. games',
-            this.stat.activeGames,
-            this.stat.allGames,
-            games.map((g) => g.disabled + '--------------' + g.disabledStatus + '-----------------' + g.name)
-          );
+          this.gamesService.setDisabledStatus(games, players, timeToPlay);
         }),
         map((games) => games.sort(firstBy('disabledStatus', 'asc').thenBy('disabled', 'asc').thenBy('rating', 'desc').thenBy('name')))
       );
@@ -108,7 +89,7 @@ export class AppComponent {
 
   private gameDexie = new GameDexie();
 
-  constructor(private dialogService: DialogService) {
+  constructor(private dialogService: DialogService, private matSnackBar: MatSnackBar, private gamesService: GamesService) {
     this.startGame.pipe(withLatestFrom(this.games$)).subscribe(([el, games]) => {
       console.log('startGame', el, games);
       this.pickRandom(el, games);
@@ -116,10 +97,6 @@ export class AppComponent {
   }
 
   // players
-
-  // deletePlayer(player: Player): void {
-  //   this.gameDexie.players.delete(player.id).then(() => this.fetchPlayers());
-  // }
 
   async editPlayer(event: Event, player?: Player): Promise<void> {
     event.stopPropagation();
@@ -156,6 +133,7 @@ export class AppComponent {
 
   async gameAction(game: Game): Promise<void> {
     if (game.disabledStatus) {
+      this.matSnackBar.open(game.disabledStatus, 'OK', SNACKBAR_CONFIG());
       return;
     }
     await this.gameDexie.games.update(game.id, {
@@ -167,8 +145,7 @@ export class AppComponent {
   private async pickRandom(el: HTMLDivElement, games: Game[]): Promise<void> {
     this.inProgress = true;
     this.result = undefined;
-    const activeGames = games.filter((g) => !g.disabled && !g.disabledStatus);
-    const result = Utils.randomItem(activeGames);
+    const result = this.gamesService.pickRandom(games);
     console.log('START..', result);
 
     if (result) {
@@ -190,6 +167,4 @@ export class AppComponent {
   selectTime(timeToPlay: TimeToPlay): void {
     this.timeToPlayChange$.next(timeToPlay);
   }
-
-  editModeChange(editMode: boolean): void {}
 }

@@ -5,60 +5,11 @@ export class Utils {
   }
 
   static fixNumber(value?: number | string, defaultNumber: number = 0): number | undefined {
-    console.log('fixNumber..', value, typeof value);
     if (typeof value === 'string') {
       return value.toUpperCase() === 'N/A' ? defaultNumber : parseFloat(value);
     } else {
       return value;
     }
-  }
-
-  static sort<T>(array: T[], args: string[]): T[] {
-    if (!array?.length) {
-      return array;
-    }
-
-    args.forEach((arg) => {
-      let ascending = true;
-
-      if (arg.startsWith('-')) {
-        arg = arg.substring(1);
-        ascending = false;
-      }
-
-      array.sort((a: any, b: any) => {
-        // obsluga nullowych/pustych wartosci
-        if (a[arg] == null && b[arg] == null) {
-          return 0;
-        }
-
-        if (a[arg] == null) {
-          return -1;
-        }
-        if (b[arg] == null) {
-          return 1;
-        }
-        if (ascending) {
-          if (a[arg] < b[arg]) {
-            return -1;
-          } else if (a[arg] > b[arg]) {
-            return 1;
-          } else {
-            return 0;
-          }
-        } else {
-          if (a[arg] < b[arg]) {
-            return 1;
-          } else if (a[arg] > b[arg]) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }
-      });
-      return array;
-    });
-    return array;
   }
 
   // static getContrastColor(color: string): string {

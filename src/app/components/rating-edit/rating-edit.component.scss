@@ -14,11 +14,11 @@
     box-shadow: $box-shadow-accent;
 
     button.rating {
-      transform: scale(1.4);
+      @include state-scale(1.4);
 
       &:hover {
         & ~ button.rating {
-          transform: scale(1);
+          @include state-scale(1);
         }
       }
     }

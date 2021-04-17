@@ -5,7 +5,7 @@
   overflow: hidden;
 
   .name {
-    height: #{$font-size-L * 2};
+    height: divide($tile-size, 4);
     padding: $small-margin;
   }
 }

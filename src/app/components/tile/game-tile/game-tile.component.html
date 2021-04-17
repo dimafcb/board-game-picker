@@ -3,6 +3,6 @@
   <div *ngIf="!editMode && item.disabledStatus" class="game-disabled-status always-active accent">
     {{ item.disabledStatus }}
   </div>
-  <div rating-badge [ratingBgg]="false" [value]="item.rating"></div>
+  <div rating-badge [ratingBgg]="true" [value]="item.rating"></div>
   <div class="name primary" matTooltip="{{ item.name }}">{{ item.name }}</div>
 </div>

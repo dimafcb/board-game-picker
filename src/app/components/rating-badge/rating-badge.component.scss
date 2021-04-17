@@ -14,9 +14,9 @@
 }
 
 $size: 24px;
-$size-hex: #{$size * 0.55};
-$size-half: #{$size * 0.5};
-$size-quarter: #{$size * 0.25};
+$size-hex: multiply($size, 0.55);
+$size-half: multiply($size, 0.5);
+$size-quarter: multiply($size, 0.25);
 
 .rating-badge {
   color: $accent-contrast;
@@ -28,7 +28,7 @@ $size-quarter: #{$size * 0.25};
   justify-content: center;
 
   &.rating-hoverable:hover {
-    transform: scale(1.1);
+    @include state-scale;
   }
 
   &.rating-bgg {

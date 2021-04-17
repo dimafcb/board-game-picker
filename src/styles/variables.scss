@@ -48,20 +48,22 @@ $font-weight-tiny: 400;
 $font-weight-normal: 500;
 $font-weight-bold: 700;
 
-// borders & box shadow
+// box shadow
 $box-shadow-primary: $primary-color-fade 0px 0px 2px 1px;
 $box-shadow-accent: $accent-color-fade 0px 0px 2px 1px;
 
-// toolbar
+// header, footers, toolbars
 $toolbar-height: 36px;
+$footer-height: 64px;
 
-$list-max-rows: 2;
+// margins
+$default-margin: 10px;
+$small-margin: 5px;
 
 // tiles / images
 $tile-size: 120px;
-$image-size: #{$tile-size * 2 / 3};
-$icon-size: #{$tile-size / 3};
-$name-size: #{$font-size-L * 2};
+$icon-size: divide($tile-size, 3);
+$name-size: divide($tile-size, 3);
 
 $editor-image-size: 200px;
 $editor-icon-size: 100px;
@@ -71,9 +73,6 @@ $result-image-size: 200px;
 $button-small-size: 24px;
 
 $time-size: 80px;
-
-$default-margin: 10px;
-$small-margin: 5px;
 
 @keyframes colorChange {
   0% {
@@ -105,7 +104,18 @@ $small-margin: 5px;
   }
 }
 
-@mixin disabled {
-  opacity: 0.4;
-  filter: grayscale(1);
+@mixin state-disabled {
+  filter: grayscale(1) opacity(0.4);
+}
+
+@mixin state-scale($factor: 1.2) {
+  transform: scale($factor);
+}
+
+@function divide($value, $divider) {
+  @return $value / $divider;
+}
+
+@function multiply($first, $second) {
+  @return $first * $second;
 }

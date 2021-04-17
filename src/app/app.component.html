@@ -55,18 +55,13 @@
   </mat-card>
 
   <div class="result-container">
-    <button mat-raised-button color="primary" [disabled]="inProgress" (click)="start(resultText)">Start</button>
     <div #resultText class="result-text animated"></div>
     <img class="result-image animated" *ngIf="result" src="{{ result.image }}" alt="" />
   </div>
 </div>
 
-<ng-template #imageTemplate let-image let-class="class" let-icon="icon">
-  <div class="wrapper">
-    <img *ngIf="image; else noImageTemplate" class="image {{ class }}" src="{{ image }}" alt="" />
-    <ng-template #noImageTemplate>
-      <mat-icon class="icon accent">{{ icon }}</mat-icon>
-    </ng-template>
-    <ng-content></ng-content>
-  </div>
-</ng-template>
+<div class="footer">
+  <button mat-button color="primary">Edit games</button>
+  <button mat-raised-button color="primary" [disabled]="inProgress" (click)="start(resultText)">Start</button>
+  <button mat-button color="primary">Edit players</button>
+</div>

@@ -9,11 +9,11 @@ export class RatingBadgeComponent implements OnChanges {
   @Input() value: number | undefined;
   @Input() ratingBgg = false;
   @Input() ratingHoverable = false;
-  @Input() tooltip: string | undefined;
-
-  valueRounded = 0;
+  @Input() tooltip?: string;
 
   @Output() action = new EventEmitter();
+
+  valueRounded = 0;
 
   constructor() {}
 

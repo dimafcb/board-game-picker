@@ -1,7 +1,12 @@
 @import '../styles/variables';
 
 .container {
-  // padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: $footer-height;
+  overflow-y: auto;
 
   .section {
     &:not(:last-child) {
@@ -65,4 +70,17 @@ game-tile {
     font-weight: $font-weight-bold;
     // animation: letterSpacing 1s;
   }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  height: $footer-height;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: $accent-color-fade solid 2px;
+  background: $primary-contrast;
 }

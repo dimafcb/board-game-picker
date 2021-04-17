@@ -8,7 +8,6 @@
   text-align: center;
 
   &.disabled {
-    opacity: 1;
     filter: unset;
 
     div:not(.always-active) {
@@ -22,7 +21,7 @@
 
   &:hover {
     image-wrapper > .wrapper > * {
-      transform: scale(1.1);
+      @include state-scale;
     }
   }
 
@@ -34,7 +33,7 @@
     background-color: $accent-color-fade;
     color: $accent-contrast;
     font-weight: $font-weight-normal;
-    line-height: $font-size-L;
+    line-height: divide($name-size, 2);
     height: $name-size;
     padding: 0 $small-margin;
     text-overflow: ellipsis;
