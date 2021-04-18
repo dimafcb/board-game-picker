@@ -40,4 +40,8 @@ export class Utils {
       return `${(value / 60) ^ 0} h ${value % 60}`;
     }
   }
+
+  static birthdateToAge(birthdate?: Date): number {
+    return birthdate ? Math.floor(Math.abs(Date.now() - new Date(birthdate).getTime()) / (1000 * 3600 * 24) / 365.25) : 0;
+  }
 }

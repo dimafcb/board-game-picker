@@ -11,24 +11,23 @@
   <span class="footer-games">
     <span *ngIf="stat.allGames; else noGamesTemplate">
       Games:&nbsp;
-      <span class="bold"> {{ stat.activeGames }}</span>
-      &nbsp;/&nbsp;
-      <span class="bold"> {{ stat.allGames }}</span>
+      <span class="count"> {{ stat.activeGames }}</span>
     </span>
     <ng-template #noGamesTemplate>No games</ng-template>
     <button mat-button color="primary" (click)="openPanel(gamesPanel)">Edit</button>
   </span>
 
   <!-- footer: start button -->
-  <button class="footer-start" mat-raised-button color="primary" [disabled]="inProgress" (click)="start()">Start</button>
+  <button class="footer-start" mat-raised-button color="primary" [disabled]="inProgress" (click)="start()">
+    Start
+    <mat-icon svgIcon="dices"></mat-icon>
+  </button>
 
   <!-- footer: edit players -->
   <span class="footer-players">
     <span *ngIf="stat.allPlayers; else noPlayersTemplate">
       Players:&nbsp;
-      <span class="bold"> {{ stat.activePlayers }}</span>
-      &nbsp;/&nbsp;
-      <span class="bold"> {{ stat.allPlayers }}</span>
+      <span class="count">{{ stat.activePlayers }}</span>
     </span>
     <ng-template #noPlayersTemplate>No players</ng-template>
     <button mat-button color="primary" (click)="openPanel(playersPanel)">Edit</button>
@@ -41,13 +40,19 @@
   <div class="editor-section">
     <div *ngFor="let player of players$ | async as playersList; trackBy: trackById" class="editor-item">
       <player-tile [item]="player" (action)="playerAction(player)"></player-tile>
-      <button mat-button color="primary" (click)="editPlayer(player)">Edit</button>
-      <button mat-button color="accent" (click)="deletePlayer(player)">Delete</button>
+      <span class="flex">
+        <button mat-button color="primary" (click)="editPlayer(player)">Edit</button>
+        <button mat-button color="accent" (click)="deletePlayer(player)">Delete</button>
+      </span>
     </div>
-    <div class="editor-add sticky-bottom">
+    <div class="editor-footer sticky-bottom">
       <button mat-stroked-button color="primary" (click)="editPlayer()">
         <mat-icon>add</mat-icon>
         Add player
+      </button>
+      <button mat-button color="warn" (click)="deletePlayers()">
+        <mat-icon>delete</mat-icon>
+        Delete all players
       </button>
     </div>
   </div>
@@ -59,13 +64,19 @@
   <div class="editor-section">
     <div *ngFor="let game of gamesAll$ | async; trackBy: trackById" class="editor-item">
       <game-tile [editMode]="true" [item]="game" (action)="gameAction($event)"></game-tile>
-      <button mat-button color="primary" (click)="editGame(game)">Edit</button>
-      <button mat-button color="accent" (click)="deleteGame(game)">Delete</button>
+      <span class="flex">
+        <button mat-button color="primary" (click)="editGame(game)">Edit</button>
+        <button mat-button color="accent" (click)="deleteGame(game)">Delete</button>
+      </span>
     </div>
-    <div class="editor-add sticky-bottom">
+    <div class="editor-footer sticky-bottom">
       <button mat-stroked-button color="primary" (click)="editGame()">
         <mat-icon>add</mat-icon>
         Add game
+      </button>
+      <button mat-button color="warn" (click)="deleteGames()">
+        <mat-icon>delete</mat-icon>
+        Delete all games
       </button>
     </div>
   </div>

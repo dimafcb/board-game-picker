@@ -6,23 +6,21 @@
   left: 0;
   right: 0;
   bottom: $footer-height;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
 }
 
 .section {
-  padding: $default-margin;
+  padding: $default-margin 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   overflow-y: auto;
-}
+  max-height: 100%;
 
-player-tile,
-game-tile {
-  margin: $default-margin;
+  player-tile,
+  game-tile {
+    margin: $default-margin;
+  }
 }
 
 .time {
@@ -42,43 +40,63 @@ game-tile {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: $accent-color-fade solid 2px;
-  background: $primary-contrast;
+  border-top: $accent-color-fade solid 1px;
+  background: $bg-color;
 
   .footer-start {
     height: $button-large-size;
-    min-width: 200px;
+    flex: 1 0 120px;
     font-size: $font-size-XL;
     border-radius: divide($button-large-size, 2);
+
+    mat-icon {
+      @include height-width(divide($button-large-size, 1.5));
+    }
+  }
+
+  .footer-games,
+  .footer-players {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 100px;
+
+    .count {
+      color: $primary-color;
+      font-size: $font-size-L;
+      font-weight: $font-weight-bold;
+    }
   }
 }
 
 .editor-section {
   overflow-y: auto;
   background: $bg-color;
-  padding: 0 $default-margin;
-  max-height: 50vh;
-  max-width: 50vw;
+  padding: $default-margin $default-margin 0 $default-margin;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  height: 100%;
 
   .editor-item {
     display: flex;
     align-items: center;
-    // @include height-width($tile-size);
+    flex-direction: column;
+    margin: $default-margin;
   }
 
-  .editor-add {
+  .editor-footer {
     padding: $default-margin;
     background: $bg-color;
     z-index: 1;
     flex: 1 0 100%;
     border-top: $accent-color-fade solid 1px;
+    display: flex;
 
-    button {
+    button.mat-stroked-button {
       border: dashed 2px;
-      width: 100%;
+      flex: 1 0 50%;
     }
   }
 }

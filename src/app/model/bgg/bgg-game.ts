@@ -22,7 +22,7 @@ export interface BggGameFull extends BggGame {
 export interface BggGameCollection {
   image: string;
   name?: {
-    '#text': string;
+    text?: string;
   };
   objectid: number;
   stats?: {

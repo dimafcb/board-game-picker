@@ -4,9 +4,14 @@
 <div class="editor-container">
   <form class="editor-form-bgg">
     <mat-form-field class="editor-form-field">
-      <input matInput placeholder="{{ player.id ? 'Link with BGG account' : 'Search for BGG user' }}" autocomplete="off" [formControl]="playerBggControl" />
+      <input
+        matInput
+        placeholder="{{ player.id ? 'Link with BGG account' : 'Search for BGG user' }}"
+        autocomplete="off"
+        [formControl]="playerBggControl"
+      />
       <button mat-button matSuffix color="primary" [disabled]="!playerBggControl.value?.length" (click)="linkBggAccount()">
-        {{ player.id ? 'Link with BGG account' : 'Search for BGG user' }}
+        {{ player.id ? 'Link' : 'Search' }}
       </button>
     </mat-form-field>
   </form>
@@ -16,10 +21,10 @@
       <input matInput placeholder="Name" autocomplete="off" [(ngModel)]="player.name" />
     </mat-form-field>
     <mat-form-field class="editor-form-field">
-      <mat-label>Birthday</mat-label>
-      <input matInput autocomplete="off" [matDatepicker]="birthdayPicker" [(ngModel)]="player.birthday" />
-      <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
-      <mat-datepicker #birthdayPicker></mat-datepicker>
+      <mat-label>Birthdate</mat-label>
+      <input matInput autocomplete="off" [matDatepicker]="birthdatePicker" [(ngModel)]="player.birthdate" />
+      <mat-datepicker-toggle matSuffix [for]="birthdatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #birthdatePicker></mat-datepicker>
     </mat-form-field>
   </div>
   <div class="editor-collection"></div>

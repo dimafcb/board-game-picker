@@ -78,8 +78,8 @@ export class GameEditorComponent implements OnInit {
         console.log('gameFull..', gameFull);
         this.game.bggId = gameFull.id;
         this.game.image = gameFull.image;
-        this.game.playersMin = gameFull.minplayers.value;
-        this.game.playersMax = gameFull.maxplayers.value;
+        this.game.minPlayers = gameFull.minplayers.value;
+        this.game.maxPlayers = gameFull.maxplayers.value;
         this.game.averageTimeToPlay = gameFull.playingtime.value;
         this.game.bggRating = Utils.fixNumber(gameFull.statistics?.ratings?.average?.value);
       });

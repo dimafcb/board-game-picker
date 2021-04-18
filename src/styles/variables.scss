@@ -1,38 +1,18 @@
-:root {
-  --primary-color: #1565c0;
-  --primary-contrast: #ffffff;
-  --primary-color-fade: #1565c0bb;
+$primary-color: #1565c1;
+$primary-color-fade: transparentize($primary-color, 0.2);
 
-  --accent-color: #616161;
-  --accent-contrast: #ffffff;
-  --accent-color-fade: #616161bb;
-}
+$accent-color: #616161;
+$accent-color-fade: transparentize($accent-color, 0.2);
 
-$primary-color: var(--primary-color);
-$primary-contrast: var(--primary-contrast);
-$primary-color-fade: var(--primary-color-fade);
+$warning-color: #f44336;
+$ok-color: #328b36;
 
-$accent-color: var(--accent-color);
-$accent-contrast: var(--accent-contrast);
-$accent-color-fade: var(--accent-color-fade);
+// text color
+$dark-color: #000000;
+$light-color: #ffffff;
 
 // bg colors
 $bg-color: #f8f8f8;
-$primary-bg-color: #ffffff;
-
-// other colors
-$black-color: #000000;
-$grey-color: #bcbcbc;
-$dark-grey-color: #848484;
-$action-color: #ff5722;
-$action-contrast: #ffffff;
-
-// ok, warning colors
-$warning-color: #f44336;
-$warning-contrast: #ffffff;
-
-$ok-color: #328b36;
-$ok-contrast: #ffffff;
 
 // font size
 $font-size-XXL: 48px; // result
@@ -137,3 +117,11 @@ $time-size: 80px;
 @function multiply($first, $second) {
   @return $first * $second;
 }
+
+@function contrast-color($color) {
+  @return if(lightness($color) < 55%, $light-color, $dark-color);
+}
+
+// @function fade-color($color) {
+//   @return if(lightness($color) < 55%, $light-color, $dark-color);
+// }

@@ -77,19 +77,23 @@ export class PlayerEditorComponent implements OnInit, OnDestroy {
           .then((collection) => {
             console.log('collection..', collection);
             if (collection.length) {
-              this.gameDexie.games.where('bggId').anyOf(collection.map((g) => g.objectid));
+              this.gameDexie.games
+                .where('bggId')
+                .anyOf(collection.map((g) => g.objectid))
+                .primaryKeys();
               this.gameDexie.games.bulkPut(
                 collection.map((g) => {
                   return {
                     averageTimeToPlay: g.stats?.playingtime,
                     dateCreated: Date.now(),
                     id: Utils.randomId('game'),
-                    name: g.name?.['#text'],
-                    playersMax: g.stats?.maxplayers,
-                    playersMin: g.stats?.minplayers,
+                    name: g.name?.text,
+                    maxPlayers: g.stats?.maxplayers,
+                    minPlayers: g.stats?.minplayers,
                     bggId: g.objectid,
                     bggRating: Utils.fixNumber(g.stats?.rating?.average?.value),
                     image: g.image,
+                    // minAge: g.minage,
                     rating: Utils.fixNumber(g.stats?.rating?.value),
                   } as Game;
                 })

@@ -1,7 +1,7 @@
 <div class="game tile animated" [ngClass]="{ disabled: !editMode && (item.disabled || item.disabledStatus) }" (click)="click()">
   <image-wrapper [image]="item.image" [icon]="'image'"></image-wrapper>
-  <div *ngIf="!editMode && item.disabledStatus" class="game-disabled-status always-active accent">
-    {{ item.disabledStatus }}
+  <div *ngIf="!editMode && item.disabledStatus" class="game-disabled-status always-active accent {{ item.disabledStatus.cssClass }}">
+    {{ item.disabledStatus.text }}
   </div>
   <div rating-badge [ratingBgg]="false" [value]="item.rating"></div>
   <div class="name primary" matTooltip="{{ item.name }}">{{ item.name }}</div>

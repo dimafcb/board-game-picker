@@ -2,6 +2,7 @@
 
 @mixin rating-color($color) {
   background: $color;
+  color: contrast-color($color);
 
   &.rating-bgg {
     &:before {
@@ -19,8 +20,8 @@ $size-half: multiply($size, 0.5);
 $size-quarter: multiply($size, 0.25);
 
 .rating-badge {
-  color: $accent-contrast;
   background: $accent-color;
+  color: contrast-color($accent-color);
   font-weight: $font-weight-normal;
   font-size: $font-size-S;
   display: inline-flex;

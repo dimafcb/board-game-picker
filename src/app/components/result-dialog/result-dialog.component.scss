@@ -12,13 +12,13 @@
 
   .result-image {
     @include height-width(auto, $result-image-size);
-    animation: imageBlur 0.5s;
+    animation: imageBlur 1s;
   }
 
   .result-text {
     font-size: $font-size-XXL;
-    padding: 20px;
-    color: var(--primary-color);
+    line-height: $font-size-XXL;
+    padding: multiply($default-margin, 2);
     font-weight: $font-weight-bold;
   }
 }

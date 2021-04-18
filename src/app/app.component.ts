@@ -141,6 +141,11 @@ export class AppComponent {
     this.playersChange$.next();
   }
 
+  async deletePlayers(): Promise<void> {
+    await this.gameDexie.players.clear();
+    this.playersChange$.next();
+  }
+
   async playerAction(player: Player): Promise<void> {
     await this.gameDexie.players.update(player.id, {
       disabled: !player.disabled,
@@ -165,9 +170,14 @@ export class AppComponent {
     this.gamesChange$.next();
   }
 
+  async deleteGames(): Promise<void> {
+    await this.gameDexie.games.clear();
+    this.gamesChange$.next();
+  }
+
   async gameAction(game: Game): Promise<void> {
     if (game.disabledStatus) {
-      this.matSnackBar.open(game.disabledStatus, 'OK', SNACKBAR_CONFIG(true));
+      this.matSnackBar.open(game.disabledStatus.text, 'OK', SNACKBAR_CONFIG(true));
       return;
     }
     await this.gameDexie.games.update(game.id, {

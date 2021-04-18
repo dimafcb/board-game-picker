@@ -30,7 +30,7 @@
     left: 0;
     right: 0;
     background-color: $accent-color-fade;
-    color: $accent-contrast;
+    color: contrast-color($accent-color);
     font-weight: $font-weight-normal;
     line-height: divide($name-size, 2);
     height: $name-size;

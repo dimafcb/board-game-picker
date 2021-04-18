@@ -12,9 +12,9 @@ $material-palette: (
   accent: $accent-color,
   warning: $warning-color,
   contrast: (
-    primary: $primary-contrast,
-    accent: $accent-contrast,
-    warning: $warning-contrast,
+    primary: contrast-color($primary-color),
+    accent: contrast-color($accent-color),
+    warning: contrast-color($warning-color),
   ),
 );
 $material-theme: mat-light-theme(
@@ -53,10 +53,6 @@ body {
 
 .accent {
   color: $accent-color;
-}
-
-.bold {
-  font-weight: $font-weight-bold;
 }
 
 .flex {
@@ -100,7 +96,7 @@ body {
 
     &,
     button {
-      color: $primary-contrast;
+      color: contrast-color($primary-color);
     }
   }
 
@@ -109,7 +105,7 @@ body {
 
     &,
     button {
-      color: $warning-contrast;
+      color: contrast-color($warning-color);
     }
   }
 }
@@ -136,11 +132,7 @@ button.mat-button-base {
 
 .mat-bottom-sheet-container {
   padding: 0 !important;
-}
-
-.editor-placeholder {
-  background: #ccc;
-  border: dotted 3px #999;
-  min-height: 100px;
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  overflow-y: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
 }

@@ -45,6 +45,7 @@ export class BggApiService {
     return parse(response, {
       parseAttributeValue: true,
       ignoreAttributes: false,
+      textNodeName: 'text',
       arrayMode: (tagName, parentTagName) => {
         // console.log('makeRequest.. arrayMode', tagName, parentTagName);
         return tagName === 'item' && parentTagName === 'items';
@@ -77,10 +78,10 @@ export class BggApiService {
   }
 
   async getUserCollection(params: any): Promise<BggGameCollection[]> {
-    const fetchPromise = this.bggFetch('collection', { ...params, subtype: [BggThingType.Game], stats: 1 });
+    const fetchPromise = this.bggFetch('collection', { ...params, subtype: [BggThingType.Game], stats: 1, own: 1, brief: 0 });
     let result = await fetchPromise;
     console.log('getUserCollection...', result);
-    if (result?.message) {
+    if (!result || result.message) {
       await timer(3000).toPromise();
       result = await fetchPromise;
     }

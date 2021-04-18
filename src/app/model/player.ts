@@ -4,7 +4,7 @@ export interface Player {
   name: string;
   dateCreated: number;
   image?: string;
-  birthday?: Date;
+  birthdate?: Date;
 
   // bgg
   bggId?: number;
