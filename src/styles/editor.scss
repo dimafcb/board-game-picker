@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+
+.editor-container {
+  padding: $default-margin;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  > * {
+    padding: $default-margin;
+  }
+
+  .editor-image-container {
+    min-width: $editor-image-size;
+    flex: 0 0 $editor-image-size;
+    text-align: center;
+  }
+
+  .editor-form-bgg {
+    flex: 1 0 100%;
+
+    .editor-form-field {
+      width: 100%;
+    }
+  }
+
+  .editor-form {
+    flex: 1 0 200px;
+
+    .editor-form-field {
+      width: 100%;
+    }
+  }
+
+  .editor-buttons {
+    flex: 1 0 100%;
+    text-align: end;
+  }
+}

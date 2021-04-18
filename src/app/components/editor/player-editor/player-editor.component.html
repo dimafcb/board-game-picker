@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="editor-toolbar">
+  <span>{{ player.id ? 'Edit player' : 'Add player' }}</span>
+</mat-toolbar>
+<div class="editor-container">
+  <form class="editor-form-bgg">
+    <mat-form-field class="editor-form-field">
+      <input matInput placeholder="{{ player.id ? 'Link with BGG account' : 'Search for BGG user' }}" autocomplete="off" [formControl]="playerBggControl" />
+      <button mat-button matSuffix color="primary" [disabled]="!playerBggControl.value?.length" (click)="linkBggAccount()">
+        {{ player.id ? 'Link with BGG account' : 'Search for BGG user' }}
+      </button>
+    </mat-form-field>
+  </form>
+  <image-picker class="editor-image-container" [image]="player.image" [icon]="'person'" (selected)="imageSelected($event)"></image-picker>
+  <div class="editor-form">
+    <mat-form-field class="editor-form-field">
+      <input matInput placeholder="Name" autocomplete="off" [(ngModel)]="player.name" />
+    </mat-form-field>
+    <mat-form-field class="editor-form-field">
+      <mat-label>Birthday</mat-label>
+      <input matInput autocomplete="off" [matDatepicker]="birthdayPicker" [(ngModel)]="player.birthday" />
+      <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+      <mat-datepicker #birthdayPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="editor-collection"></div>
+  <div class="editor-buttons">
+    <button mat-button color="accent" (click)="cancel()">Cancel</button>
+    <button *ngIf="player.id" mat-button color="accent" (click)="deletePlayer()">Delete</button>
+    <button mat-button color="primary" (click)="save()">Save</button>
+  </div>
+</div>

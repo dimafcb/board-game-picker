@@ -1,0 +1,139 @@
+:root {
+  --primary-color: #1565c0;
+  --primary-contrast: #ffffff;
+  --primary-color-fade: #1565c0bb;
+
+  --accent-color: #616161;
+  --accent-contrast: #ffffff;
+  --accent-color-fade: #616161bb;
+}
+
+$primary-color: var(--primary-color);
+$primary-contrast: var(--primary-contrast);
+$primary-color-fade: var(--primary-color-fade);
+
+$accent-color: var(--accent-color);
+$accent-contrast: var(--accent-contrast);
+$accent-color-fade: var(--accent-color-fade);
+
+// bg colors
+$bg-color: #f8f8f8;
+$primary-bg-color: #ffffff;
+
+// other colors
+$black-color: #000000;
+$grey-color: #bcbcbc;
+$dark-grey-color: #848484;
+$action-color: #ff5722;
+$action-contrast: #ffffff;
+
+// ok, warning colors
+$warning-color: #f44336;
+$warning-contrast: #ffffff;
+
+$ok-color: #328b36;
+$ok-contrast: #ffffff;
+
+// font size
+$font-size-XXL: 48px; // result
+$font-size-XL: 24px; // headers
+$font-size-L: 18px; // headers
+$font-size-M: 14px; // main content
+$font-size-S: 12px; // main content
+$font-size-XS: 10px; // labels
+$font-size-XXS: 8px; // placeholders
+
+// font weight
+$font-weight-tiny: 400;
+$font-weight-normal: 500;
+$font-weight-bold: 700;
+
+// box shadow
+$box-shadow-primary: $primary-color-fade 0px 0px 2px 1px;
+$box-shadow-accent: $accent-color-fade 0px 0px 2px 1px;
+
+// header, footers, toolbars
+$toolbar-height: 36px;
+$footer-height: 64px;
+
+// margins
+$default-margin: 10px;
+$small-margin: 5px;
+
+// tiles / images
+$tile-size: 120px;
+$icon-size: divide($tile-size, 3);
+$name-size: divide($tile-size, 3);
+
+$editor-image-size: 200px;
+$editor-icon-size: 100px;
+
+$result-image-size: 200px;
+
+$button-small-size: 24px;
+
+$button-large-size: 48px;
+
+$time-size: 80px;
+
+// animations
+
+@keyframes colorChange {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes letterSpacing {
+  0% {
+    letter-spacing: -40px;
+  }
+  75% {
+    letter-spacing: 10px;
+  }
+  100% {
+    letter-spacing: 0px;
+  }
+}
+
+@keyframes imageBlur {
+  0% {
+    filter: blur(10px);
+  }
+  100% {
+    filter: unset;
+  }
+}
+
+// mixins
+
+@mixin state-disabled {
+  filter: grayscale(1) opacity(0.4);
+}
+
+@mixin state-scale($factor: 1.2) {
+  transform: scale($factor);
+}
+
+@mixin height-width($size, $size-max: null) {
+  height: $size;
+  width: $size;
+
+  @if ($size-max) {
+    max-width: $size-max;
+    max-height: $size-max;
+  }
+}
+
+// functions
+
+@function divide($value, $divider) {
+  @return $value / $divider;
+}
+
+@function multiply($first, $second) {
+  @return $first * $second;
+}

@@ -1,0 +1,6 @@
+<div class="wrapper">
+  <img *ngIf="image; else noImageTemplate" class="image {{ class }}" src="{{ image }}" alt="" />
+  <ng-template #noImageTemplate>
+    <mat-icon *ngIf="icon" class="icon accent">{{ icon }}</mat-icon>
+  </ng-template>
+</div>

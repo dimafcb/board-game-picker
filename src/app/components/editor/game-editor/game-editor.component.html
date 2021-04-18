@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="editor-toolbar">
+  <span>{{ game.id ? 'Edit game' : 'Add game' }}</span>
+</mat-toolbar>
+<div class="editor-container">
+  <form class="editor-form-bgg">
+    <mat-form-field class="editor-form-field">
+      <mat-label>Search via BGG</mat-label>
+      <input type="text" placeholder="Type at least 3 chars" aria-label="Number" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of autocompleteItems | async" [value]="option">
+          {{ option.name.value }}
+          <ng-container *ngIf="option.yearpublished?.value">&nbsp;({{ option.yearpublished?.value }})</ng-container>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <image-picker class="editor-image-container" [image]="game.image" [icon]="'image'" (selected)="imageSelected($event)"></image-picker>
+  <div class="editor-form">
+    <mat-form-field class="editor-form-field">
+      <input matInput placeholder="Name" autocomplete="off" [(ngModel)]="game.name" />
+    </mat-form-field>
+    <div class="rating-container">
+      <span class="accent flex-50">
+        Your rating:&nbsp;
+        <span rating-badge [value]="game.rating" (action)="ratingEditor.toggle()" [ratingHoverable]="true" [tooltip]="'Click to edit'"></span>
+        <rating-edit #ratingEditor [(value)]="game.rating"></rating-edit>
+      </span>
+      <span class="accent flex-50">
+        BGG rating:&nbsp;
+        <span rating-badge [value]="game.bggRating" [ratingBgg]="true" [tooltip]="'BoardGameGeek rating'"></span>
+      </span>
+    </div>
+  </div>
+  <div class="editor-buttons">
+    <button mat-button color="accent" (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" (click)="save()">Save</button>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+@import '../../../styles/variables';
+
+@mixin rating-color($color) {
+  background: $color;
+
+  &.rating-bgg {
+    &:before {
+      border-bottom-color: $color;
+    }
+    &:after {
+      border-top-color: $color;
+    }
+  }
+}
+
+$size: 24px;
+$size-hex: multiply($size, 0.55);
+$size-half: multiply($size, 0.5);
+$size-quarter: multiply($size, 0.25);
+
+.rating-badge {
+  color: $accent-contrast;
+  background: $accent-color;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-S;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.rating-hoverable:hover {
+    @include state-scale;
+  }
+
+  &.rating-bgg {
+    width: $size;
+    height: $size-hex;
+    position: relative;
+    border-radius: 0 !important;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: $size-half solid transparent;
+      border-right: $size-half solid transparent;
+    }
+
+    &:before {
+      top: -$size-quarter;
+      border-bottom: $size-quarter solid $accent-color;
+    }
+
+    &:after {
+      bottom: -$size-quarter;
+      border-top: $size-quarter solid $accent-color;
+    }
+
+    ::ng-deep {
+      span.mat-ripple {
+        top: -$size-quarter;
+        bottom: -$size-quarter;
+      }
+    }
+  }
+
+  &.rating-1 {
+    @include rating-color(#b2151f);
+  }
+  &.rating-2 {
+    @include rating-color(#b2151f);
+  }
+  &.rating-3 {
+    @include rating-color(#d71925);
+  }
+  &.rating-4 {
+    @include rating-color(#d71925);
+  }
+  &.rating-5 {
+    @include rating-color(#5369a2);
+  }
+  &.rating-6 {
+    @include rating-color(#5369a2);
+  }
+  &.rating-7 {
+    @include rating-color(#1978b3);
+  }
+  &.rating-8 {
+    @include rating-color(#1d804c);
+  }
+  &.rating-9 {
+    @include rating-color(#186b40);
+  }
+  &.rating-10 {
+    @include rating-color(#186b40);
+  }
+}

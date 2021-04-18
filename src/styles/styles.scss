@@ -1,0 +1,146 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import 'tile';
+@import 'editor';
+@import '~@angular/material/prebuilt-themes/indigo-pink';
+@import '~@angular/material/theming';
+@include mat-core();
+
+// material theme
+$material-palette: (
+  primary: $primary-color,
+  accent: $accent-color,
+  warning: $warning-color,
+  contrast: (
+    primary: $primary-contrast,
+    accent: $accent-contrast,
+    warning: $warning-contrast,
+  ),
+);
+$material-theme: mat-light-theme(
+  mat-palette($material-palette, primary),
+  mat-palette($material-palette, accent),
+  mat-palette($material-palette, warning)
+);
+@include angular-material-theme($material-theme);
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: $bg-color;
+}
+
+* {
+  box-sizing: border-box;
+
+  &.animated,
+  &.animated * {
+    transition: all 0.1s linear;
+  }
+}
+
+.disabled {
+  @include state-disabled;
+}
+
+.primary {
+  color: $primary-color;
+}
+
+.accent {
+  color: $accent-color;
+}
+
+.bold {
+  font-weight: $font-weight-bold;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+
+  &-50 {
+    flex: 0 0 50%;
+  }
+}
+
+.sticky {
+  position: sticky;
+  z-index: 1;
+
+  &-top {
+    @extend .sticky;
+    top: 0px;
+  }
+  &-bottom {
+    @extend .sticky;
+    bottom: 0px;
+  }
+}
+.mat-dialog-container {
+  padding: 0px !important;
+  max-width: 600px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-toolbar {
+  height: $toolbar-height;
+  font-size: $font-size-M;
+}
+
+.mat-snack-bar-container {
+  &.message-ok {
+    background-color: $primary-color;
+
+    &,
+    button {
+      color: $primary-contrast;
+    }
+  }
+
+  &.message-error {
+    background-color: $warning-color;
+
+    &,
+    button {
+      color: $warning-contrast;
+    }
+  }
+}
+
+.mat-badge-content {
+  right: 8px !important;
+  top: -8px !important;
+}
+
+button.mat-icon-button.mini {
+  @include height-width($button-small-size);
+  line-height: $button-small-size;
+
+  mat-icon {
+    font-size: $font-size-L;
+  }
+}
+
+button.mat-button-base {
+  &:not(.mat-icon-button, .mat-fab, .mat-mini-fab) {
+    border-radius: 18px;
+  }
+}
+
+.mat-bottom-sheet-container {
+  padding: 0 !important;
+}
+
+.editor-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 100px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

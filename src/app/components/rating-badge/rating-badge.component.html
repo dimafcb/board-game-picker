@@ -1,0 +1,9 @@
+<button
+  mat-icon-button
+  class="accent rating-badge mini animated rating-{{ valueRounded }}"
+  [ngClass]="{ 'rating-bgg': ratingBgg, 'rating-hoverable': ratingHoverable }"
+  (click)="onClick()"
+  matTooltip="{{ tooltip }}"
+>
+  {{ value ? (value | number: '1.0-1') : '-' }}
+</button>

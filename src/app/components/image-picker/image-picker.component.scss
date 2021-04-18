@@ -1,0 +1,22 @@
+@import '../../../styles/variables';
+
+.image-wrapper {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  min-height: $editor-image-size;
+  width: 100%;
+
+  .image {
+    position: relative;
+    @include height-width(auto, 100%);
+  }
+
+  .icon {
+    height: $editor-icon-size;
+    width: $editor-icon-size;
+    font-size: $editor-icon-size;
+    color: $accent-color;
+  }
+}

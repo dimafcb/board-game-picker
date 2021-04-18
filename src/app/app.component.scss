@@ -1,0 +1,84 @@
+@import '../styles/variables';
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: $footer-height;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+}
+
+.section {
+  padding: $default-margin;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-y: auto;
+}
+
+player-tile,
+game-tile {
+  margin: $default-margin;
+}
+
+.time {
+  min-width: 100px;
+
+  .time-value {
+    font-size: $font-size-L;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  height: $footer-height;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: $accent-color-fade solid 2px;
+  background: $primary-contrast;
+
+  .footer-start {
+    height: $button-large-size;
+    min-width: 200px;
+    font-size: $font-size-XL;
+    border-radius: divide($button-large-size, 2);
+  }
+}
+
+.editor-section {
+  overflow-y: auto;
+  background: $bg-color;
+  padding: 0 $default-margin;
+  max-height: 50vh;
+  max-width: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .editor-item {
+    display: flex;
+    align-items: center;
+    // @include height-width($tile-size);
+  }
+
+  .editor-add {
+    padding: $default-margin;
+    background: $bg-color;
+    z-index: 1;
+    flex: 1 0 100%;
+    border-top: $accent-color-fade solid 1px;
+
+    button {
+      border: dashed 2px;
+      width: 100%;
+    }
+  }
+}

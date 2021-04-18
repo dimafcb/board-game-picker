@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+.wrapper {
+  @include height-width(100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  .icon {
+    @include height-width($icon-size);
+    font-size: $icon-size;
+  }
+
+  .image {
+    @include height-width(100%);
+  }
+}

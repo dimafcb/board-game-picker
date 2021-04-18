@@ -1,0 +1,4 @@
+<div class="player tile animated" [ngClass]="{ disabled: item.disabled }" (click)="click()">
+  <image-wrapper [image]="item.image" [icon]="'person'"></image-wrapper>
+  <div class="name primary">{{ item.name }}</div>
+</div>
