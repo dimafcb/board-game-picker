@@ -107,6 +107,13 @@
               "devServerTarget": "board-game-picker:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "repo": "https://github.com/dimafcb/board-game-picker.git",
+            "baseHref": "/board-game-picker/"
+          }
         }
       }
     }
