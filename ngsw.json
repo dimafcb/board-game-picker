@@ -1,0 +1,83 @@
+{
+  "configVersion": 1,
+  "timestamp": 1618870788825,
+  "index": "/board-game-picker/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/board-game-picker/favicon.ico",
+        "/board-game-picker/index.html",
+        "/board-game-picker/main.143e5f4ba32235d7b19b.js",
+        "/board-game-picker/manifest.webmanifest",
+        "/board-game-picker/polyfills.94daefd414b8355106ab.js",
+        "/board-game-picker/runtime.7b63b9fd40098a2e8207.js",
+        "/board-game-picker/styles.2aa6e481d1c078a91bcc.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/board-game-picker/assets/icons/icon-128x128.png",
+        "/board-game-picker/assets/icons/icon-144x144.png",
+        "/board-game-picker/assets/icons/icon-152x152.png",
+        "/board-game-picker/assets/icons/icon-192x192.png",
+        "/board-game-picker/assets/icons/icon-384x384.png",
+        "/board-game-picker/assets/icons/icon-512x512.png",
+        "/board-game-picker/assets/icons/icon-72x72.png",
+        "/board-game-picker/assets/icons/icon-96x96.png",
+        "/board-game-picker/assets/images/dices.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/board-game-picker/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/board-game-picker/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/board-game-picker/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/board-game-picker/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/board-game-picker/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/board-game-picker/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/board-game-picker/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/board-game-picker/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/board-game-picker/assets/images/dices.svg": "ed508f6ff8c95c4da6eec7f263a0493408944589",
+    "/board-game-picker/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/board-game-picker/index.html": "9530e27944e8e6281343b2ed03f443f575bec67b",
+    "/board-game-picker/main.143e5f4ba32235d7b19b.js": "45fc9f779433435199df2498c2d6ede8f585169d",
+    "/board-game-picker/manifest.webmanifest": "a595792301b8249d2c1ccbc755254b94f50f6f38",
+    "/board-game-picker/polyfills.94daefd414b8355106ab.js": "cfe7b0b53e96bff9ba384b4d497c08475a617d62",
+    "/board-game-picker/runtime.7b63b9fd40098a2e8207.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/board-game-picker/styles.2aa6e481d1c078a91bcc.css": "c5ffa50132a1986e3ff43168c818087a215778c0"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
