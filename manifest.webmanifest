@@ -1,6 +1,7 @@
 {
-  "name": "board-game-picker",
-  "short_name": "board-game-picker",
+  "name": "Board Games Collection",
+  "short_name": "Board Games Collection",
+  "description": "Awesome application for board games lovers which can answer the question: 'What to play today?' and help you to organize your collection of board games",
   "theme_color": "#1565c1",
   "background_color": "#fafafa",
   "display": "standalone",
