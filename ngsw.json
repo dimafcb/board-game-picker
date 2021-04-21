@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1618924556244,
+  "timestamp": 1619018769177,
   "index": "/board-game-picker/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/board-game-picker/favicon.ico",
         "/board-game-picker/index.html",
-        "/board-game-picker/main.576d3dfd484473f8115c.js",
+        "/board-game-picker/main.04bb543efd05b695f7fa.js",
         "/board-game-picker/manifest.webmanifest",
         "/board-game-picker/polyfills.94daefd414b8355106ab.js",
         "/board-game-picker/runtime.7b63b9fd40098a2e8207.js",
-        "/board-game-picker/styles.d04edcf2bfc98dbb4e72.css"
+        "/board-game-picker/styles.98d1db24daa28c436327.css"
       ],
       "patterns": []
     },
@@ -39,7 +39,10 @@
         "/board-game-picker/assets/icons/icon-96x96.png",
         "/board-game-picker/assets/images/logo.png"
       ],
-      "patterns": []
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/.*"
+      ]
     }
   ],
   "dataGroups": [],
@@ -54,12 +57,12 @@
     "/board-game-picker/assets/icons/icon-96x96.png": "dab95ff447c6aaf1b3a50229274c4fcdb34bfd67",
     "/board-game-picker/assets/images/logo.png": "03c79cadc9c0386d27f642f9589ce789a8f89420",
     "/board-game-picker/favicon.ico": "4d2aefa806c8eba6f0df097ad905803314f7a0bf",
-    "/board-game-picker/index.html": "0d0d809fc21e0c0356e5461fe9290cf18955557f",
-    "/board-game-picker/main.576d3dfd484473f8115c.js": "a3f77ec8dfc501215d4beb1bd37b37e090ac3451",
+    "/board-game-picker/index.html": "fc6eb645fa7360a3bd758b4116d1ac9a4d66b9b3",
+    "/board-game-picker/main.04bb543efd05b695f7fa.js": "87dc25318b77f2cd036ac63b7b890956339a6d67",
     "/board-game-picker/manifest.webmanifest": "1092ed506372c801fbe06fd96792cb5809932ec0",
     "/board-game-picker/polyfills.94daefd414b8355106ab.js": "cfe7b0b53e96bff9ba384b4d497c08475a617d62",
     "/board-game-picker/runtime.7b63b9fd40098a2e8207.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/board-game-picker/styles.d04edcf2bfc98dbb4e72.css": "999f8dd792c5925b6aff1767f1f1ddc7e2d283f1"
+    "/board-game-picker/styles.98d1db24daa28c436327.css": "9984687e6f33dfc899cc8643c8c779c3e7f7bc0d"
   },
   "navigationUrls": [
     {
