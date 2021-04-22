@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1619042299686,
+  "timestamp": 1619113444605,
   "index": "/board-game-picker/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/board-game-picker/favicon.ico",
         "/board-game-picker/index.html",
-        "/board-game-picker/main.c41c4c82407740030774.js",
+        "/board-game-picker/main.07dc5007c328d0505ded.js",
         "/board-game-picker/manifest.webmanifest",
         "/board-game-picker/polyfills.94daefd414b8355106ab.js",
         "/board-game-picker/runtime.7b63b9fd40098a2e8207.js",
@@ -37,7 +37,10 @@
         "/board-game-picker/assets/icons/icon-512x512.png",
         "/board-game-picker/assets/icons/icon-72x72.png",
         "/board-game-picker/assets/icons/icon-96x96.png",
-        "/board-game-picker/assets/images/logo.png"
+        "/board-game-picker/assets/images/age.png",
+        "/board-game-picker/assets/images/logo.png",
+        "/board-game-picker/assets/images/players.png",
+        "/board-game-picker/assets/images/time.png"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
@@ -47,18 +50,21 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/board-game-picker/assets/icons/icon-128x128.png": "05c5110e398c343a95c2fc75bcde925b9d918cb8",
-    "/board-game-picker/assets/icons/icon-144x144.png": "d188089a0a642876a27dab7c4af7680abfc1449a",
-    "/board-game-picker/assets/icons/icon-152x152.png": "e335a61f163ae416524f3a0656071cf2bac3fb4a",
-    "/board-game-picker/assets/icons/icon-192x192.png": "f24c534fb5a96abc0a60d82ff7f797de62b0d8f4",
-    "/board-game-picker/assets/icons/icon-384x384.png": "3cc85ecfc4490ed72b477cd3e1a0bf10a7824f60",
-    "/board-game-picker/assets/icons/icon-512x512.png": "ca666a4ee041fe6a79e706e5103d960940142cfa",
-    "/board-game-picker/assets/icons/icon-72x72.png": "03c79cadc9c0386d27f642f9589ce789a8f89420",
-    "/board-game-picker/assets/icons/icon-96x96.png": "dab95ff447c6aaf1b3a50229274c4fcdb34bfd67",
-    "/board-game-picker/assets/images/logo.png": "03c79cadc9c0386d27f642f9589ce789a8f89420",
-    "/board-game-picker/favicon.ico": "4d2aefa806c8eba6f0df097ad905803314f7a0bf",
-    "/board-game-picker/index.html": "61129797484efe6c9c1346b0bc38e1e0b92ba41e",
-    "/board-game-picker/main.c41c4c82407740030774.js": "ce8af0fc373c7d137e47f3b58a72b32ed8319aa4",
+    "/board-game-picker/assets/icons/icon-128x128.png": "f213f1d72fb5609e843331833264165e9f172dae",
+    "/board-game-picker/assets/icons/icon-144x144.png": "38a8b245d5b094d60be74f928b8ab7ca90102e7e",
+    "/board-game-picker/assets/icons/icon-152x152.png": "5ec23a11ea181bc62e169b41a723030f2e2e3391",
+    "/board-game-picker/assets/icons/icon-192x192.png": "fbc493bdba7ea16b1a8958686577bc60633d9100",
+    "/board-game-picker/assets/icons/icon-384x384.png": "586d5d64439927e01d03bc693aa78ab2bcd382f9",
+    "/board-game-picker/assets/icons/icon-512x512.png": "7e0a3ffd6228c662542f4f3be550352d8f86674e",
+    "/board-game-picker/assets/icons/icon-72x72.png": "608fa698244bd1920ab13530186990ed0a65e319",
+    "/board-game-picker/assets/icons/icon-96x96.png": "bd1bf2ae11c9de106470270e88a2b15df87b38dc",
+    "/board-game-picker/assets/images/age.png": "d3a956fba1b6856b62c91dbafcacf359f0264ce1",
+    "/board-game-picker/assets/images/logo.png": "7d7f621916c7f1d317f59dd7e5d1d3c2881a7a14",
+    "/board-game-picker/assets/images/players.png": "81fb690b84335a91b3c9b415be2f7f83bcf4bf2d",
+    "/board-game-picker/assets/images/time.png": "3f9ce6d18853cae786091b5a6f712dda8cb91944",
+    "/board-game-picker/favicon.ico": "c8328f85cfe130789791d20300f43b586dc9b3ae",
+    "/board-game-picker/index.html": "86beba03cb987f2fb9e2b01575170daab72d28f6",
+    "/board-game-picker/main.07dc5007c328d0505ded.js": "5418448b08d1d781f4ed76c403ad0b6edbeff356",
     "/board-game-picker/manifest.webmanifest": "1092ed506372c801fbe06fd96792cb5809932ec0",
     "/board-game-picker/polyfills.94daefd414b8355106ab.js": "cfe7b0b53e96bff9ba384b4d497c08475a617d62",
     "/board-game-picker/runtime.7b63b9fd40098a2e8207.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
