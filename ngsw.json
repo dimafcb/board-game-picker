@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1619541613275,
+  "timestamp": 1619622423708,
   "index": "/board-game-picker/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/board-game-picker/favicon.ico",
         "/board-game-picker/index.html",
-        "/board-game-picker/main.c7eb5fedbe9b56d17094.js",
+        "/board-game-picker/main.63b52f7ca80808684985.js",
         "/board-game-picker/manifest.webmanifest",
         "/board-game-picker/polyfills.94daefd414b8355106ab.js",
         "/board-game-picker/runtime.7b63b9fd40098a2e8207.js",
-        "/board-game-picker/styles.bac4070ef52825a55e0d.css"
+        "/board-game-picker/styles.fccc40ed1259f418ef7c.css"
       ],
       "patterns": []
     },
@@ -63,12 +63,12 @@
     "/board-game-picker/assets/images/players.png": "81fb690b84335a91b3c9b415be2f7f83bcf4bf2d",
     "/board-game-picker/assets/images/time.png": "6375c0ab9027e18ba4f25225e1d674ade761a7f9",
     "/board-game-picker/favicon.ico": "c8328f85cfe130789791d20300f43b586dc9b3ae",
-    "/board-game-picker/index.html": "551928141bc4708894123777356d1ca0462fb695",
-    "/board-game-picker/main.c7eb5fedbe9b56d17094.js": "db6712d3a3e9d5585a46a970a2a4d956a49b7400",
+    "/board-game-picker/index.html": "43388adb2fc229f3d77849b70654d3fa7009911f",
+    "/board-game-picker/main.63b52f7ca80808684985.js": "d96e8313d5c5e3d9315f8ffdafbaa244bd9c6904",
     "/board-game-picker/manifest.webmanifest": "1092ed506372c801fbe06fd96792cb5809932ec0",
     "/board-game-picker/polyfills.94daefd414b8355106ab.js": "cfe7b0b53e96bff9ba384b4d497c08475a617d62",
     "/board-game-picker/runtime.7b63b9fd40098a2e8207.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/board-game-picker/styles.bac4070ef52825a55e0d.css": "8cf224281a67b5718b63097463e51d402807d83f"
+    "/board-game-picker/styles.fccc40ed1259f418ef7c.css": "0b0ade586eaad774e6b6e1b6751c74eb2ad1c5a8"
   },
   "navigationUrls": [
     {
