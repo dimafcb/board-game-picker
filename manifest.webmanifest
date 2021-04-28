@@ -5,7 +5,7 @@
   "theme_color": "#1565c1",
   "background_color": "#fafafa",
   "display": "standalone",
-  "scope": "./",
+  "scope": "/board-game-picker/",
   "start_url": "./index.html",
   "icons": [
     {
